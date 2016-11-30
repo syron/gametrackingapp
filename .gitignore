@@ -17,6 +17,7 @@
 [Rr]eleases/
 x64/
 x86/
+<<<<<<< HEAD
 build/
 bld/
 [Bb]in/
@@ -24,6 +25,17 @@ bld/
 
 # Visual Studo 2015 cache/options directory
 .vs/
+=======
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio 2015 cache/options directory
+.vs/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -38,6 +50,13 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+<<<<<<< HEAD
+=======
+# DNX
+project.lock.json
+artifacts/
+
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 *_i.c
 *_p.c
 *_i.h
@@ -70,14 +89,27 @@ _Chutzpah*
 ipch/
 *.aps
 *.ncb
+<<<<<<< HEAD
 *.opensdf
 *.sdf
 *.cachefile
+=======
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 
 # Visual Studio profiler
 *.psess
 *.vsp
 *.vspx
+<<<<<<< HEAD
+=======
+*.sap
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 
 # TFS 2012 Local Workspace
 $tf/
@@ -90,7 +122,11 @@ _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 
+<<<<<<< HEAD
 # JustCode is a .NET coding addin-in
+=======
+# JustCode is a .NET coding add-in
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 .JustCode
 
 # TeamCity is a build add-in
@@ -102,6 +138,10 @@ _TeamCity*
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml
+<<<<<<< HEAD
+=======
+nCrunchTemp_*
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 
 # MightyMoose
 *.mm.*
@@ -129,11 +169,23 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
+<<<<<<< HEAD
 # TODO: Comment the next line if you want to checkin your web deploy settings 
+=======
+# TODO: Comment the next line if you want to checkin your web deploy settings
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
 
+<<<<<<< HEAD
+=======
+# Microsoft Azure Web App publish settings. Comment the next line if you want to
+# checkin your Azure Web App publish settings, but sensitive information contained
+# in these scripts will be unencrypted
+PublishScripts/
+
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
@@ -142,6 +194,7 @@ publish/
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
+<<<<<<< HEAD
 
 # Windows Azure Build Output
 csx/
@@ -154,6 +207,34 @@ AppPackages/
 *.[Cc]ache
 ClientBin/
 [Ss]tyle[Cc]op.*
+=======
+# NuGet v3's project.json files produces more ignoreable files
+*.nuget.props
+*.nuget.targets
+
+# Microsoft Azure Build Output
+csx/
+*.build.csdef
+
+# Microsoft Azure Emulator
+ecf/
+rcf/
+
+# Windows Store app package directories and files
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!*.[Cc]ache/
+
+# Others
+ClientBin/
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 ~$*
 *~
 *.dbmdl
@@ -161,7 +242,15 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+<<<<<<< HEAD
 bower_components/
+=======
+orleans.codegen.cs
+
+# Since there are multiple workflows, uncomment next line to ignore bower_components
+# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
+#bower_components/
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -186,6 +275,12 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+<<<<<<< HEAD
+=======
+# GhostDoc plugin setting file
+*.GhostDoc.xml
+
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 
@@ -194,3 +289,25 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+<<<<<<< HEAD
+=======
+
+# Visual Studio LightSwitch build output
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+
+# Paket dependency manager
+.paket/paket.exe
+paket-files/
+
+# FAKE - F# Make
+.fake/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+>>>>>>> 5e93fda84281a037ad3165b9a5f165a800a70b53
