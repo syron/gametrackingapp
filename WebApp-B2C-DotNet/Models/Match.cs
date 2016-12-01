@@ -15,12 +15,13 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Models
             ChallengerPoints = match.ChallengerPoints;
             OpponentPoints = match.OpponentPoints;
             Timestamp = match.Timestamp;
+            MatchId = match.MatchId;
 
             Opponent = new Models.User(users.GetByUserId(match.OpponentId));
             Challenger = new Models.User(users.GetByUserId(match.ChallengerId));
 
         }
-
+        public string MatchId { get; set; }
         public User Challenger { get; set; }
         public User Opponent { get; set; }
         public int ChallengerPoints { get; set; }

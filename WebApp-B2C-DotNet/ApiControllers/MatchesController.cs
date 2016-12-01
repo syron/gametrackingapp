@@ -50,6 +50,43 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         }
 
         [HttpGet]
+        [Route("api/matches/my/challenged")]
+        public List<MatchEntity> MyChallengedMatches() {
+            Matches matches = new Matches();
+            Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var userId = objectId.Value;
+
+            var mymatches = matches.GetMatchesByUserId(userId);
+            return mymatches.Where(m => m.OpponentId == userId && m.Status == 0).ToList();
+        }
+
+        [HttpGet]
+        [Route("api/matches/my/accepted")]
+        public List<MatchEntity> MyAcceptedMatches()
+        {
+            Matches matches = new Matches();
+            Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var userId = objectId.Value;
+
+            var mymatches = matches.GetMatchesByUserId(userId);
+            return mymatches.Where(m => m.Status == 1).ToList();
+        }
+
+        [HttpGet]
+        [Route("api/matches/my/played")]
+        public List<MatchEntity> MyPlayedMatches()
+        {
+            Matches matches = new Matches();
+            Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var userId = objectId.Value;
+
+            var mymatches = matches.GetMatchesByUserId(userId);
+            return mymatches.Where(m => m.Status == 2).ToList();
+        }
+
+
+
+        [HttpGet]
         [Route("api/matches/{matchId}")]
         public MatchEntity Get(Guid matchId)
         {

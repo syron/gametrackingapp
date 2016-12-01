@@ -19,7 +19,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/angular.min.js"));
+                      "~/Scripts/angular.min.js",
+                      "~/Scripts/app/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

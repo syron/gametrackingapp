@@ -2,133 +2,6 @@
     ViewBag.Title = "Index";
 }
 
-@section Scripts {
-    <script type="text/javascript">
-        
-        var app = angular.module('gameapp', []);
-
-        app.factory('userService', function ($http) {
-            return {
-                users: function () {
-                    return $http.get('/api/pingis/users');
-                },
-                isregistered: function () {
-                    return $http.get('/api/pingis/isregistered');
-                },
-                register: function () {
-                    return $http.get('/api/pingis/register');
-                },
-                unregister: function () {
-                    return $http.get('/api/pingis/unregister');
-                }
-            };
-        });
-
-        app.factory('matchService', function ($http) {
-            return {
-                challenge: function (opponentId) {
-                    return $http.get('/api/matches/challenge?opponentId=' + opponentId);
-                },
-                matches: function (userId = null, status = null) {
-                    var data = {};
-                    if (userId != null)
-                        data.userId = userId;
-                    if (status != null)
-                        data.status = status;
-                    return $http.get('/api/matches', { params: data });
-                },
-                matchesByUserId: function (userId) {
-                    return $http.get('/api/matches?userId=' + userId)
-                },
-                matchesByStatus: function (status) {
-                    return $http.get('/api/matches?status=' + status);
-                }
-            };
-        });
-
-        app.controller('PingisCtrl', function (userService, matchService, $scope) {
-            $scope.users = [];
-            $scope.matches = [];
-            $scope.myinprogressmatches = [];
-            $scope.myplayedmatches = [];
-            $scope.myupcomingmatches = [];
-            $scope.currentUserIsRegistered = false;
-            $scope.currentUserId = "";
-            $scope.selectedUserToChallenge = null;
-
-            $scope.checkIfRegistered = function () {
-                userService.isregistered().then(function (d) {
-                    $scope.currentUserIsRegistered = d.data;
-                    if ($scope.currentUserIsRegistered)
-                        $scope.initPingisGame();
-                });
-            };
-
-            $scope.registerMe = function () {
-                userService.register().then(function (d) {
-                    if (d.data == true) {
-                        $scope.currentUserIsRegistered = true;
-                    } else {
-                        alert('already registered...');
-                    }
-                    $scope.initPingisGame();
-                });
-            };
-
-            $scope.unregisterMe = function () {
-                userService.unregister().then(function (d) {
-                    if (d.data == true) {
-                        $scope.currentUserIsRegistered = false;
-                    } else {
-                        alert('already unregistered...');
-                    }
-                });
-            };
-
-            $scope.challenge = function () {
-                matchService.challenge($scope.selectedUserToChallenge).then(function (d) {
-                    $scope.loadMatches();
-                });
-            };
-
-            $scope.loadMatches = function () {
-                matchService.matches().then(function (d) {
-                    $scope.matches = d.data;
-                });
-                
-                matchService.matches($scope.currentUserId, 2).then(function (d) {
-                    $scope.myplayedmatches = d.data;
-                });
-
-                matchService.matches($scope.currentUserId, 0).then(function (d) {
-                    $scope.myupcomingmatches = d.data;
-                });
-            };
-
-            $scope.loadUsers = function () {
-                userService.users().then(function (d) {
-                    console.log(d);
-                    $scope.users = d.data;
-                });
-            };
-
-            $scope.initPingisGame = function () {
-                $scope.loadUsers();
-                $scope.loadMatches();
-            };
-
-            $scope.init = function (userId) {
-                $scope.currentUserId = userId;
-            }
-
-            $scope.checkIfRegistered();
-        });
-
-    </script>
-}
-
-
-
 <div ng-controller="PingisCtrl" ng-init="init('@ViewBag.CurrentUserId')">
 
     <div ng-hide="currentUserIsRegistered == false">
@@ -143,110 +16,40 @@
             <input type="button" class="btn btn-success" ng-click="challenge()" value="Challenge" />
         </div>
 
-        <h1>My games</h1>
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#matchesUpcoming">Upcoming</a></li>
-            <li><a data-toggle="tab" href="#matchesInProgress">In Progress</a></li>
-            <li><a data-toggle="tab" href="#matchesHistory">History</a></li>
-            <li><a data-toggle="tab" href="#matchesTotal">All Matches</a></li>
-        </ul>
+        <h1>Games</h1>
 
-        <div class="tab-content">
-            <div id="matchesUpcoming" class="tab-pane fade in active">
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Challenger</th>
-                            <th>Opponent</th>
-                            <th>Score</th>
-                            <th>Timestamp</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="match in myupcomingmatches">
-                            <td>{{match.Challenger.DisplayName}}</td>
-                            <td>{{match.Opponent.DisplayName}}</td>
-                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
-                            <td>{{match.Timestamp}}</td>
-                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="row">
 
+            <div class="col-md-4">
+                <h3>Challenged</h3>
+
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="match in mychallengedmatches">
+                        {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
+
+                        <span ng-hide="match.Challenger.UserId == currentUserId">
+                            <a class="btn btn-success" ng-click="acceptMatch(match.MatchId)">Accept</a> <a class="btn btn-danger" ng-click="declineMatch(match.MatchId)">Decline</a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Upcoming</h3>
+
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="match in myupcomingmatches">
+                        {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Last 5 played games</h3>
             </div>
 
-            <div id="matchesInProgress" class="tab-pane fade">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Challenger</th>
-                            <th>Opponent</th>
-                            <th>Score</th>
-                            <th>Timestamp</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="match in myinprogressmatches">
-                            <td>{{match.Challenger.DisplayName}}</td>
-                            <td>{{match.Opponent.DisplayName}}</td>
-                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
-                            <td>{{match.Timestamp}}</td>
-                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="matchesHistory" class="tab-pane fade">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Challenger</th>
-                            <th>Opponent</th>
-                            <th>Score</th>
-                            <th>Timestamp</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="match in myplayedmatches">
-                            <td>{{match.Challenger.DisplayName}}</td>
-                            <td>{{match.Opponent.DisplayName}}</td>
-                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
-                            <td>{{match.Timestamp}}</td>
-                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="matchesTotal" class="tab-pane fade">
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Challenger</th>
-                            <th>Opponent</th>
-                            <th>Score</th>
-                            <th>Timestamp</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="match in matches">
-                            <td>{{match.Challenger.DisplayName}}</td>
-                            <td>{{match.Opponent.DisplayName}}</td>
-                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
-                            <td>{{match.Timestamp}}</td>
-                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
         </div>
+
+
+
 
     </div>
     <div ng-hide="currentUserIsRegistered == true">
