@@ -1044,6 +1044,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Pingis\Index.cshtml" />
     <Content Include="Views\Pingis\Register.cshtml" />
+    <None Include="Web.Base.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service Capabilities\" />
@@ -1097,10 +1098,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
+  <!--<Target Name="BeforeBuild">
+
+  </Target>-->
+  <!--<Target Name="AfterBuild">
   </Target> -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" />
+  <Target Name="BeforeBuild" Condition="'$(PublishProfileName)' == '' And '$(WebPublishProfileFile)' == ''">
+    <TransformXml Source="Web.Base.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+  </Target>
 </Project>
