@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        
+        var app = angular.module('gameapp', []);
+
+        app.factory('userService', function ($http) {
+            return {
+                users: function () {
+                    return $http.get('/api/pingis/users');
+                },
+                isregistered: function () {
+                    return $http.get('/api/pingis/isregistered');
+                },
+                register: function () {
+                    return $http.get('/api/pingis/register');
+                },
+                unregister: function () {
+                    return $http.get('/api/pingis/unregister');
+                }
+            };
+        });
+
+        app.factory('matchService', function ($http) {
+            return {
+                challenge: function (opponentId) {
+                    return $http.get('/api/matches/challenge?opponentId=' + opponentId);
+                },
+                matches: function () {
+                    return $http.get('/api/matches');
+                },
+                matchesByStatus: function (status) {
+                    return $http.get('/api/matches?status=' + status);
+                }
+            };
+        });
+
+        app.controller('PingisCtrl', function (userService, matchService, $scope) {
+            $scope.users = [];
+            $scope.matches = [];
+            $scope.currentUserIsRegistered = false;
+            $scope.selectedUserToChallenge = null;
+
+            $scope.checkIfRegistered = function () {
+                userService.isregistered().then(function (d) {
+                    $scope.currentUserIsRegistered = d.data;
+                    if ($scope.currentUserIsRegistered)
+                        $scope.initPingisGame();
+                });
+            };
+
+            $scope.registerMe = function () {
+                userService.register().then(function (d) {
+                    if (d.data == true) {
+                        $scope.currentUserIsRegistered = true;
+                    } else {
+                        alert('already registered...');
+                    }
+                    $scope.initPingisGame();
+                });
+            };
+
+            $scope.unregisterMe = function () {
+                userService.unregister().then(function (d) {
+                    if (d.data == true) {
+                        $scope.currentUserIsRegistered = false;
+                    } else {
+                        alert('already unregistered...');
+                    }
+                });
+            };
+
+            $scope.challenge = function () {
+                console.log($scope.selectedUserToChallenge);
+                matchService.challenge($scope.selectedUserToChallenge).then(function (d) {
+                    console.log(d);
+                    $scope.loadMatches();
+                });
+            };
+
+            $scope.loadMatches = function () {
+                matchService.matches().then(function (d) {
+                    console.log(d);
+                    $scope.matches = d.data;
+                });
+            };
+
+            $scope.loadUsers = function () {
+                userService.users().then(function (d) {
+                    console.log(d);
+                    $scope.users = d.data;
+                });
+            };
+
+            $scope.initPingisGame = function () {
+                $scope.loadUsers();
+                $scope.loadMatches();
+            };
+
+            $scope.checkIfRegistered();
+        });
+
+    </script>
+}
+
+<div ng-controller="PingisCtrl">
+    <div ng-hide="currentUserIsRegistered == false">
+        <a class="btn btn-info" ng-click="unregisterMe()">Unregister</a>
+
+        <div class="challenge">
+            <select ng-model="selectedUserToChallenge">
+                <option ng-repeat="user in users" value="{{user.UserId}}">
+                    {{user.DisplayName}}
+                </option>
+            </select>
+            <input type="button" class="btn btn-success" ng-click="challenge()" value="Challenge" />
+        </div>
+
+        <h1>My games</h1>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">Upcoming</a></li>
+            <li><a data-toggle="tab" href="#menu1">History</a></li>
+            <li><a data-toggle="tab" href="#menu2">All Matches</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Challenger</th>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="match in matches">
+                            <td>{{match.Challenger.DisplayName}}</td>
+                            <td>{{match.Opponent.DisplayName}}</td>
+                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
+                            <td>{{match.Timestamp}}</td>
+                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="menu1" class="tab-pane fade">
+                <h3>Menu 1</h3>
+                <p>Some content in menu 1.</p>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <h3>Menu 2</h3>
+                <p>Some content in menu 2.</p>
+            </div>
+        </div>
+
+    </div>
+    <div ng-hide="currentUserIsRegistered == true">
+        <a class="btn btn-info" ng-click="registerMe()">Register</a>
+    </div>
+</div>
