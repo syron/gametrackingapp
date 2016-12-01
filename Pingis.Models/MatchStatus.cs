@@ -8,10 +8,10 @@ namespace Pingis.Models
 {
     public enum MatchStatus
     {
-        Challenged,
-        Accepted,
-        InProgress,
-        Done,
-        Aborted
+        Challenged = 0,
+        Accepted = 1,
+        InProgress = 2,
+        Done = 3,
+        Aborted = 4
     }
 }

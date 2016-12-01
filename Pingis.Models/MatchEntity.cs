@@ -13,11 +13,11 @@ namespace Pingis.Models
             this.PartitionKey = challengerId;
             this.RowKey = matchId.ToString();
             this.OpponentId = oppenentId;
-            this.Status = MatchStatus.Challenged;
+            this.Status = 0;
         }
 
         public MatchEntity() {
-            this.Status = MatchStatus.Challenged;
+            this.Status = 0;
         }
 
         public string MatchId { get { return this.RowKey;  } }
@@ -25,6 +25,6 @@ namespace Pingis.Models
         public string OpponentId { get; set; }
         public int ChallengerPoints { get; set; }
         public int OpponentPoints { get; set; }
-        public MatchStatus Status { get; set; }
+        public int Status { get; set; }
     }
 }

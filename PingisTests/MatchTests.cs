@@ -109,7 +109,7 @@ namespace PingisTests
             entity.OpponentPoints = 2;
             entity.ChallengerPoints = 11;
 
-            entity.Status = MatchStatus.Done;
+            entity.Status = 1;
 
 
             matches.Update(entity);

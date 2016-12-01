@@ -12,7 +12,6 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Controllers
     {
         public Users users = null;
         public Matches matches = null;
-        public string currentUserId = null;
         
         public BaseController() : base()
         {
@@ -30,5 +29,14 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Controllers
                 return true;
             }
         }
-    }
+
+
+        public string currentUserId
+        {
+            get {
+                Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+                return objectId.Value;
+            }
+        }
+}
 }

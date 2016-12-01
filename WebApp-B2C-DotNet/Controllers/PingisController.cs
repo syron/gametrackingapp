@@ -12,6 +12,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Controllers
         // GET: Pingis
         public ActionResult Index()
         {
+            ViewBag.CurrentUserId = currentUserId;
             return View();
         }
     }

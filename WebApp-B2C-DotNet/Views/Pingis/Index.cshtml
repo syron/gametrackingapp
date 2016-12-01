@@ -29,8 +29,16 @@
                 challenge: function (opponentId) {
                     return $http.get('/api/matches/challenge?opponentId=' + opponentId);
                 },
-                matches: function () {
-                    return $http.get('/api/matches');
+                matches: function (userId = null, status = null) {
+                    var data = {};
+                    if (userId != null)
+                        data.userId = userId;
+                    if (status != null)
+                        data.status = status;
+                    return $http.get('/api/matches', { params: data });
+                },
+                matchesByUserId: function (userId) {
+                    return $http.get('/api/matches?userId=' + userId)
                 },
                 matchesByStatus: function (status) {
                     return $http.get('/api/matches?status=' + status);
@@ -41,7 +49,11 @@
         app.controller('PingisCtrl', function (userService, matchService, $scope) {
             $scope.users = [];
             $scope.matches = [];
+            $scope.myinprogressmatches = [];
+            $scope.myplayedmatches = [];
+            $scope.myupcomingmatches = [];
             $scope.currentUserIsRegistered = false;
+            $scope.currentUserId = "";
             $scope.selectedUserToChallenge = null;
 
             $scope.checkIfRegistered = function () {
@@ -74,17 +86,22 @@
             };
 
             $scope.challenge = function () {
-                console.log($scope.selectedUserToChallenge);
                 matchService.challenge($scope.selectedUserToChallenge).then(function (d) {
-                    console.log(d);
                     $scope.loadMatches();
                 });
             };
 
             $scope.loadMatches = function () {
                 matchService.matches().then(function (d) {
-                    console.log(d);
                     $scope.matches = d.data;
+                });
+                
+                matchService.matches($scope.currentUserId, 2).then(function (d) {
+                    $scope.myplayedmatches = d.data;
+                });
+
+                matchService.matches($scope.currentUserId, 0).then(function (d) {
+                    $scope.myupcomingmatches = d.data;
                 });
             };
 
@@ -100,13 +117,20 @@
                 $scope.loadMatches();
             };
 
+            $scope.init = function (userId) {
+                $scope.currentUserId = userId;
+            }
+
             $scope.checkIfRegistered();
         });
 
     </script>
 }
 
-<div ng-controller="PingisCtrl">
+
+
+<div ng-controller="PingisCtrl" ng-init="init('@ViewBag.CurrentUserId')">
+
     <div ng-hide="currentUserIsRegistered == false">
         <a class="btn btn-info" ng-click="unregisterMe()">Unregister</a>
 
@@ -121,14 +145,85 @@
 
         <h1>My games</h1>
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#home">Upcoming</a></li>
-            <li><a data-toggle="tab" href="#menu1">History</a></li>
-            <li><a data-toggle="tab" href="#menu2">All Matches</a></li>
+            <li class="active"><a data-toggle="tab" href="#matchesUpcoming">Upcoming</a></li>
+            <li><a data-toggle="tab" href="#matchesInProgress">In Progress</a></li>
+            <li><a data-toggle="tab" href="#matchesHistory">History</a></li>
+            <li><a data-toggle="tab" href="#matchesTotal">All Matches</a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
+            <div id="matchesUpcoming" class="tab-pane fade in active">
                 
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Challenger</th>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="match in myupcomingmatches">
+                            <td>{{match.Challenger.DisplayName}}</td>
+                            <td>{{match.Opponent.DisplayName}}</td>
+                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
+                            <td>{{match.Timestamp}}</td>
+                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div id="matchesInProgress" class="tab-pane fade">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Challenger</th>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="match in myinprogressmatches">
+                            <td>{{match.Challenger.DisplayName}}</td>
+                            <td>{{match.Opponent.DisplayName}}</td>
+                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
+                            <td>{{match.Timestamp}}</td>
+                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="matchesHistory" class="tab-pane fade">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Challenger</th>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="match in myplayedmatches">
+                            <td>{{match.Challenger.DisplayName}}</td>
+                            <td>{{match.Opponent.DisplayName}}</td>
+                            <td>{{match.ChallengerPoints}} : {{match.OpponentPoints}}</td>
+                            <td>{{match.Timestamp}}</td>
+                            <td><a href="#" class="btn btn-info" ng-click="updateScore(match)">Update Score</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="matchesTotal" class="tab-pane fade">
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -150,14 +245,6 @@
                     </tbody>
                 </table>
 
-            </div>
-            <div id="menu1" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Some content in menu 1.</p>
-            </div>
-            <div id="menu2" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Some content in menu 2.</p>
             </div>
         </div>
 

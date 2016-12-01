@@ -30,20 +30,12 @@ namespace Pingis.DAL
             return table.ExecuteQuery(query).First();
         }
 
-        public List<MatchEntity> GetAll(MatchStatus? status = null)
+        public List<MatchEntity> GetAll()
         {
-            TableQuery<MatchEntity> query = null;
-
-            if (status == null)
-            {
-                query = new TableQuery<MatchEntity>();
-            }
-            else
-            {
-                query = new TableQuery<MatchEntity>().Where(TableQuery.GenerateFilterCondition("Status", QueryComparisons.Equal, status.Value.ToString()));
-            }
-
+            TableQuery<MatchEntity> query = new TableQuery<MatchEntity>();
+            
             var matches = table.ExecuteQuery(query);
+            
             if (matches == null)
                 return null;
 

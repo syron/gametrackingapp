@@ -18,23 +18,31 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
     public class MatchesController : ApiController
     {
         [HttpGet]
-        public List<Match> Get(MatchStatus? status = null)
+        public List<Match> Get(string userId = null, int? status = null)
         {
             Matches matches = new Matches();
             Users users = new Users();
 
-            var playedMatches = matches.GetAll(status);
+            List<MatchEntity> playedMatches = null;
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                playedMatches = matches.GetMatchesByUserId(userId.ToString());
+            }
+            else
+            {
+                playedMatches = matches.GetAll();
+            }
+
+            if (status.HasValue) {
+                playedMatches = playedMatches.Where(s => s.Status == status).ToList();
+            }
+            
             List<Match> result = new List<Match>();
             foreach (var match in playedMatches)
             {
-                Match m = new Match();
-                m.ChallengerPoints = match.ChallengerPoints;
-                m.OpponentPoints = match.OpponentPoints;
-                m.Timestamp = match.Timestamp;
-
-                m.Opponent = new Models.User(users.GetByUserId(match.OpponentId));
-                m.Challenger = new Models.User(users.GetByUserId(match.ChallengerId));
-
+                Match m = new Match(match, matches, users);
+               
                 result.Add(m);
             }
 
