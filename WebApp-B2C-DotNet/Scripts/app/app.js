@@ -63,7 +63,9 @@ challenge: function (opponentId) {
     };
 });
 
-app.controller('PingisCtrl', function (userService, matchService, $scope) {
+app.constant("moment", moment);
+
+app.controller('PingisCtrl', function (userService, matchService, moment, $scope) {
     $scope.users = [];
     $scope.matches = [];
     $scope.myinprogressmatches = [];
@@ -75,14 +77,16 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
     $scope.selectedUserToChallenge = null;
     $scope.selectedMatch = null;
 
+    $scope.currentDate = new moment();
+
     $scope.selectMatch = function (match) {
         $scope.selectedMatch = match;
     };
 
     $scope.saveMatch = function (match) {
-        console.log(match);
         matchService.finishMatch(match.MatchId, match.ChallengerPoints, match.OpponentPoints).then(function (d) {
-            alert('match finished...');
+            toastr.success("Match Status", "Match finished.");
+            $scope.loadMatches();
         });
     };
 
@@ -99,7 +103,7 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
             if (d.data === true) {
                 $scope.currentUserIsRegistered = true;
             } else {
-                alert('already registered...');
+                toastr.error("Already registered", "Game Registration");
             }
             $scope.initPingisGame();
         });
@@ -110,7 +114,7 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
             if (d.data === true) {
                 $scope.currentUserIsRegistered = false;
             } else {
-                alert('already unregistered...');
+                toastr.error("Already registered", "Game Registration");
             }
         });
     };
@@ -145,20 +149,19 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
 
     $scope.acceptMatch = function (matchId) {
         matchService.acceptMatch(matchId).then(function (d) {
-            alert('Match has been accepted...');
+            toastr.success("Match has been accepted", "Match status changed");
             $scope.loadMatches();
         });
     };
     $scope.declineMatch = function (matchId) {
         matchService.declineMatch(matchId).then(function (d) {
-            alert('Match has been declined...');
+            toastr.error("Match has been declined", "Match status changed");
             $scope.loadMatches();
         });
     };
 
     $scope.loadUsers = function () {
         userService.users().then(function (d) {
-            console.log(d);
             $scope.users = d.data;
         });
     };

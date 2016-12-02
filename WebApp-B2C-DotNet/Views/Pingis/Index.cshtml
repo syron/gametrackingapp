@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="saveMatch(selectedMatch)">Save changes</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveMatch(selectedMatch)" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>
@@ -74,6 +74,12 @@
             <div class="col-md-4">
                 <h3>Last played games</h3>
 
+                @*<table class="table">
+                    <tr ng-repeat="match in myplayedmatches">
+
+                    </tr>
+                </table>*@
+
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="match in myplayedmatches">
                         {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}  
@@ -90,6 +96,19 @@
         <div class="row">
             <div class="col-xs-12">
 
+
+                <table class="table table-striped">
+                    <tbody>
+                        <tr ng-repeat="match in matches">
+                            <td>
+                                {{match.Timestamp}}
+                            </td>
+                            <td>
+                                {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="match in matches">

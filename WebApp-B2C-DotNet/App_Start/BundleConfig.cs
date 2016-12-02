@@ -20,10 +20,14 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/angular.min.js",
+                      "~/Scripts/toastr.min.js",
+                      "~/Scripts/moment.min.js",
+                      "~/Scripts/angular-moment.min.js",
                       "~/Scripts/app/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/toastr.min.css",
                       "~/Content/site.css"));
         }
     }
