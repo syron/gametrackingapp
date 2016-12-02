@@ -162,7 +162,13 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
 
     $scope.loadUsers = function () {
         userService.users().then(function (d) {
-            $scope.users = d.data;
+            $scope.users = new Array();
+            for (var i = 0; i < d.data.length; i++) {
+                var user = d.data[i];
+
+                if (user.UserId != $scope.currentUserId) 
+                    $scope.users.push(user);
+            }
         });
     };
 
