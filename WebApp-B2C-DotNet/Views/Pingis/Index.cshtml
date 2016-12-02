@@ -72,11 +72,14 @@
                 </ul>
             </div>
             <div class="col-md-4">
-                <h3>Last 5 played games</h3>
+                <h3>Last played games</h3>
 
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="match in myplayedmatches">
                         {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}  
+
+                        <span class="label label-success" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints < match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints > match.OpponentPoints)">WON</span>
+                        <span class="label label-danger" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints > match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints < match.OpponentPoints)">LOST</span>
                     </li>
                 </ul>
             </div>
