@@ -47,12 +47,19 @@ challenge: function (opponentId) {
             return $http.get('/api/matches/my/played');
         },
         acceptMatch: function (matchId) {
-            return $http.get('api/matches/accept/' + matchId);
+            return $http.get('/api/matches/accept/' + matchId);
         },
         declineMatch: function (matchId) {
-            return $http.get('api/matches/decline/' + matchId);
-        }
+            return $http.get('/api/matches/decline/' + matchId);
+        },
+        finishMatch: function (matchId, challengerPoints, opponentPoints) {
+            var data = {
+                challengerPoints: challengerPoints,
+                opponentPoints: opponentPoints
+            };
 
+            return $http.get('/api/matches/finish/' + matchId, { params: data });
+        }
     };
 });
 
@@ -74,6 +81,9 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
 
     $scope.saveMatch = function (match) {
         console.log(match);
+        matchService.finishMatch(match.MatchId, match.ChallengerPoints, match.OpponentPoints).then(function (d) {
+            alert('match finished...');
+        });
     };
 
     $scope.checkIfRegistered = function () {
@@ -113,7 +123,7 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
 
     $scope.loadMatches = function () {
         // get all matches
-        matchService.matches().then(function (d) {
+        matchService.matches(null, 2).then(function (d) {
             $scope.matches = d.data;
         });
 
