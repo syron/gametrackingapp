@@ -45,6 +45,12 @@ challenge: function (opponentId) {
         },
         myPlayedMatches: function () {
             return $http.get('/api/matches/my/played');
+        },
+        acceptMatch: function (matchId) {
+            return $http.get('api/matches/accept/' + matchId);
+        },
+        declineMatch: function (matchId) {
+            return $http.get('api/matches/decline/' + matchId);
         }
 
     };
@@ -60,6 +66,15 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
     $scope.currentUserIsRegistered = false;
     $scope.currentUserId = "";
     $scope.selectedUserToChallenge = null;
+    $scope.selectedMatch = null;
+
+    $scope.selectMatch = function (match) {
+        $scope.selectedMatch = match;
+    };
+
+    $scope.saveMatch = function (match) {
+        console.log(match);
+    };
 
     $scope.checkIfRegistered = function () {
         userService.isregistered().then(function (d) {
@@ -119,10 +134,16 @@ app.controller('PingisCtrl', function (userService, matchService, $scope) {
     };
 
     $scope.acceptMatch = function (matchId) {
-        console.log("Button clicked...", matchId);
+        matchService.acceptMatch(matchId).then(function (d) {
+            alert('Match has been accepted...');
+            $scope.loadMatches();
+        });
     };
     $scope.declineMatch = function (matchId) {
-        console.log("Button decline clicked...", matchId);
+        matchService.declineMatch(matchId).then(function (d) {
+            alert('Match has been declined...');
+            $scope.loadMatches();
+        });
     };
 
     $scope.loadUsers = function () {

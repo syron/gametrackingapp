@@ -107,5 +107,78 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 
             return matches.GetMatchById(matchId);
         }
+
+        [HttpGet]
+        [Route("api/matches/accept/{matchId}")]
+        public bool Accept(string matchId)
+        {
+            Matches matches = new Matches();
+            Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var userId = objectId.Value;
+            var match = matches.GetMatchById(Guid.Parse(matchId));
+
+            // if challengerid is equal to current user id... no accept is allowed.
+            if (match.ChallengerId == userId) return false;
+
+            // if match status is not equal to 0, accept is not possible.
+            if (match.Status != 0) return false;
+
+            match.Status = 1;
+            matches.Update(match);
+
+            return true;
+        }
+
+        [HttpGet]
+        [Route("api/matches/finish/{matchId}")]
+        public bool Finish(string matchId, int challengerPoints, int opponentPoints)
+        {
+            Matches matches = new Matches();
+            Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var userId = objectId.Value;
+            var match = matches.GetMatchById(Guid.Parse(matchId));
+
+            if (match.ChallengerId == userId || match.OpponentId == userId)
+            {
+                if (match.Status != 1)
+                    return false;
+
+                match.Status = 2;
+                match.ChallengerPoints = challengerPoints;
+                match.OpponentPoints = opponentPoints;
+                matches.Update(match);
+                    
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+
+            // if match status is not equal to 0, accept is not possible.
+
+            
+        }
+
+        [HttpGet]
+        [Route("api/matches/decline/{matchId}")]
+        public bool Decline(string matchId)
+        {
+            Matches matches = new Matches();
+            Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var userId = objectId.Value;
+            var match = matches.GetMatchById(Guid.Parse(matchId));
+
+            // if challengerid is equal to current user id... no accept is allowed.
+            if (match.ChallengerId == userId) return false;
+
+            // if match status is not equal to 0, accept is not possible.
+            if (match.Status != 0) return false;
+            
+            matches.Delete(match);
+
+            return true;
+        }
     }
 }

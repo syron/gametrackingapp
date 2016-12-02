@@ -3,6 +3,30 @@
 }
 
 <div ng-controller="PingisCtrl" ng-init="init('@ViewBag.CurrentUserId')">
+    <!-- Modals -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{selectedMatch.Challenger.DisplayName}} vs {{selectedMatch.Opponent.DisplayName}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-4 text-right"><input type="number" ng-model="selectedMatch.ChallengerPoints" /></div>
+                        <div class="col-xs-4 text-center">:</div>
+                        <div class="col-xs-4 text-left"><input type="number" ng-model="selectedMatch.OpponentPoints" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveMatch(selectedMatch)">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <div ng-hide="currentUserIsRegistered == false">
         <a class="btn btn-info" ng-click="unregisterMe()">Unregister</a>
@@ -39,6 +63,10 @@
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="match in myupcomingmatches">
                         {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
+
+                        <span>
+                            <a class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="selectMatch(match)">Finish Game</a>
+                        </span>
                     </li>
                 </ul>
             </div>
