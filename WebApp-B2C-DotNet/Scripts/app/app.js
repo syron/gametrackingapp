@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('gameapp', []);
+var app = angular.module('gameapp', ['angularMoment']);
 
 app.factory('userService', function ($http) {
     return {
@@ -130,7 +130,8 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
     $scope.loadMatches = function () {
         // get all matches
         matchService.matches(null, 2).then(function (d) {
-            $scope.matches = d.data;
+            var matches = d.data;
+            $scope.matches = matches;
         });
 
         // get my played matches 
