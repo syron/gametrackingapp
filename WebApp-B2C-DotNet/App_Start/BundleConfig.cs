@@ -26,7 +26,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
                       "~/Scripts/select2.min.js",
                       "~/Scripts/app/app.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/appcss").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/toastr.min.css",
                       "~/css/font-awesome.min.css",
