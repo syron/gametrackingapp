@@ -98,6 +98,12 @@
 
 
                 <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <td>Match</td>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr ng-repeat="match in matches">
                             <td>
@@ -110,11 +116,6 @@
                     </tbody>
                 </table>
 
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="match in matches">
-                        {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}
-                    </li>
-                </ul>
 
             </div>
 
