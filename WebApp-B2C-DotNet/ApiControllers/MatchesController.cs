@@ -35,7 +35,11 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             }
 
             if (status.HasValue) {
-                playedMatches = playedMatches.Where(s => s.Status == status).ToList();
+                var tempMatches = playedMatches.Where(s => s.Status == status);
+                if (tempMatches == null)
+                    return null;
+
+                playedMatches = tempMatches.ToList();
             }
             
             List<Match> result = new List<Match>();
@@ -46,7 +50,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 result.Add(m);
             }
 
-            return result;
+            return result.OrderByDescending(r => r.Timestamp).ToList();
         }
 
         [HttpGet]
@@ -91,7 +95,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             var userId = objectId.Value;
 
             var mymatches = matches.GetMatchesByUserId(userId);
-            return mymatches.Where(m => m.OpponentId == userId && m.Status == 0).ToList();
+            return mymatches.Where(m => m.OpponentId == userId && m.Status == 0).OrderByDescending(r => r.Timestamp).ToList();
         }
 
         [HttpGet]
@@ -103,7 +107,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             var userId = objectId.Value;
 
             var mymatches = matches.GetMatchesByUserId(userId);
-            return mymatches.Where(m => m.Status == 1).ToList();
+            return mymatches.Where(m => m.Status == 1).OrderByDescending(r => r.Timestamp).ToList();
         }
 
         [HttpGet]
@@ -115,7 +119,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             var userId = objectId.Value;
 
             var mymatches = matches.GetMatchesByUserId(userId);
-            return mymatches.Where(m => m.Status == 2).ToList();
+            return mymatches.Where(m => m.Status == 2).OrderByDescending(r => r.Timestamp).ToList();
         }
 
 
