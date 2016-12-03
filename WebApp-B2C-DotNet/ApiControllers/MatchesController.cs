@@ -52,7 +52,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 result.Add(m);
             }
 
-            result = result.OrderByDescending(r => r.MatchUpdated   ).ToList();
+            result = result.OrderByDescending(r => r.MatchUpdated ).ToList();
 
             if (top.HasValue)
             {

@@ -28,6 +28,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/toastr.min.css",
+                      "~/css/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }
