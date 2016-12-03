@@ -1,6 +1,11 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+@section Scripts {
+    <script type="text/javascript">
+        $('select').select2();
+    </script>
+}
 
 <div ng-controller="PingisCtrl" ng-init="init('@ViewBag.CurrentUserId')">
     <!-- Modals -->
