@@ -103,6 +103,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
             string userId = objectId.Value;
 
+            if (opponentId == userId) return null;
+
             var currentUserMatches = matches.GetMatchesByUserId(userId);
 
             var matchId = Guid.NewGuid();
