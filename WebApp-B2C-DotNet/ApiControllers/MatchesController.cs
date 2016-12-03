@@ -50,6 +50,40 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         }
 
         [HttpGet]
+        [Route("api/matches/count")]
+        public int NumberOfMatches(string userId = null, int? status = null)
+        {
+            Matches matches = new Matches();
+            Users users = new Users();
+
+            List<MatchEntity> playedMatches = null;
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                playedMatches = matches.GetMatchesByUserId(userId.ToString());
+            }
+            else
+            {
+                playedMatches = matches.GetAll();
+            }
+
+            if (playedMatches == null || playedMatches.Count == 0)
+                return 0;
+
+            if (status.HasValue)
+            {
+                var tempMatches = playedMatches.Where(s => s.Status == status);
+                if (tempMatches != null)
+                    playedMatches = tempMatches.ToList();
+                else
+                    return 0;
+            }
+           
+
+            return playedMatches.Count;
+        }
+
+        [HttpGet]
         [Route("api/matches/my/challenged")]
         public List<MatchEntity> MyChallengedMatches() {
             Matches matches = new Matches();
