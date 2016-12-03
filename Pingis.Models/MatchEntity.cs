@@ -14,10 +14,12 @@ namespace Pingis.Models
             this.RowKey = matchId.ToString();
             this.OpponentId = oppenentId;
             this.Status = 0;
+            this.MatchUpdated = DateTimeOffset.Now;
         }
 
         public MatchEntity() {
             this.Status = 0;
+            this.MatchUpdated = DateTimeOffset.Now;
         }
 
         public string MatchId { get { return this.RowKey;  } }
@@ -26,5 +28,6 @@ namespace Pingis.Models
         public int ChallengerPoints { get; set; }
         public int OpponentPoints { get; set; }
         public int Status { get; set; }
+        public DateTimeOffset MatchUpdated { get; set; }
     }
 }

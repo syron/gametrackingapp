@@ -101,7 +101,7 @@
                     <tbody>
                         <tr ng-repeat="match in matches">
                             <td>
-                                <span am-time-ago="match.Timestamp"></span>
+                                <span am-time-ago="match.MatchUpdated"></span>
                             </td>
                             <td>
                                 {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}

@@ -44,6 +44,7 @@ namespace Pingis.DAL
 
         public void Update(MatchEntity match)
         {
+            match.MatchUpdated = DateTimeOffset.Now;
             TableOperation updateOperation = TableOperation.InsertOrReplace(match);
             table.Execute(updateOperation);
         }

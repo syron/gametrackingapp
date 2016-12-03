@@ -34,6 +34,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 playedMatches = matches.GetAll();
             }
 
+            if (playedMatches == null) return null;
+
             if (status.HasValue) {
                 var tempMatches = playedMatches.Where(s => s.Status == status);
                 if (tempMatches == null)
@@ -50,7 +52,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 result.Add(m);
             }
 
-            result = result.OrderByDescending(r => r.Timestamp).ToList();
+            result = result.OrderByDescending(r => r.MatchUpdated   ).ToList();
 
             if (top.HasValue)
             {
@@ -153,17 +155,19 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 
             var matchId = Guid.NewGuid();
             var matchEntity = new MatchEntity(matchId, objectId.Value, opponentId);
-            if (currentUserMatches == null) 
+            if (currentUserMatches == null)
                 matches.RegisterMatch(matchEntity);
-
-            if (currentUserMatches.Any(cu => cu.Status == 0 || cu.Status == 1))
-            {
-                // do nothing
-                return null;
-            }
             else
             {
-                matches.RegisterMatch(matchEntity);
+                if (currentUserMatches.Any(cu => cu.Status == 0 || cu.Status == 1))
+                {
+                    // do nothing
+                    return null;
+                }
+                else
+                {
+                    matches.RegisterMatch(matchEntity);
+                }
             }
 
             return matches.GetMatchById(matchId);
