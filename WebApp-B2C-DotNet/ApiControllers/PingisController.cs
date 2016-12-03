@@ -99,7 +99,22 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                     }
                     highscore.Add(new HighscorePosition() { User = user, Value = value });
                 }
-            } else { return null; }
+            }
+            else if (by == "winCount")
+            {
+                foreach (var user in users)
+                {
+                    var matches = user.Matches.Where(m => m.Status == 2);
+
+                    var matchesUserChallengeWin = matches.Where(m => m.Challenger.UserId == user.UserId && m.ChallengerPoints > m.OpponentPoints);
+                    var matchesUserOpponentWin = matches.Where(m => m.Opponent.UserId == user.UserId && m.ChallengerPoints < m.OpponentPoints);
+
+                    var userWins = matchesUserChallengeWin.Count() + matchesUserOpponentWin.Count();
+
+                    highscore.Add(new HighscorePosition() { User = user, Value = userWins });
+                }
+            }
+            else { return null; }
             return highscore.OrderByDescending(hs => hs.Value).Take(top);
         }
     }
