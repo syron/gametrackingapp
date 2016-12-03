@@ -67,28 +67,3 @@ input[type="checkbox"].input-validation-error {
 #profile-link {
     cursor:pointer;
 }
-
-.claim-table, table, td, th {
-    margin-bottom:30px;
-    border: solid;
-    border-width:thin;
-    border-color:rgb(187, 187, 187);
-    background-color:rgb(238,238,238);
-    width:100%;
-    table-layout:fixed;
-}
-
-.claim-type {
-    padding-right: 30px;
-    text-align:left;
-}
-
-.claim-data {
-    padding-left:5px;
-    overflow-x:hidden;
-    text-overflow:ellipsis;
-}
-
-.claim-head {
-    background-color:rgb(157, 201, 212);
-}
