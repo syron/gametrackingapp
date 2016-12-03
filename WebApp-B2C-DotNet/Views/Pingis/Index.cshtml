@@ -51,48 +51,63 @@
         <div class="row">
 
 
-            <div class="col-md-4">
+            <div class="col-xs-12 col-md-4">
                 <h3>Challenged</h3>
 
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="match in mychallengedmatches">
-                        {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
+                <div ng-hide="mychallengedmatches.length == 0">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="match in mychallengedmatches">
+                            {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
 
-                        <span ng-hide="match.Challenger.UserId == currentUserId">
-                            <a class="btn btn-success" ng-click="acceptMatch(match.MatchId)">Accept</a> <a class="btn btn-danger" ng-click="declineMatch(match.MatchId)">Decline</a>
-                        </span>
-                        <br />
-                        <span class="small" am-time-ago="match.MatchUpdated"></span>
-                    </li>
-                </ul>
+                            <span ng-hide="match.Challenger.UserId == currentUserId">
+                                <a class="btn btn-success" ng-click="acceptMatch(match.MatchId)">Accept</a> <a class="btn btn-danger" ng-click="declineMatch(match.MatchId)">Decline</a>
+                            </span>
+                            <br />
+                            <span class="small" am-time-ago="match.MatchUpdated"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-hide="mychallengedmatches.length > 0">
+                    <span class="small">Why not challenge someone? You have no active challenge!</span>
+                </div>
 
 
                 <h3>Upcoming</h3>
 
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="match in myupcomingmatches">
-                        {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
+                <div ng-hide="myupcomingmatches.length == 0">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="match in myupcomingmatches">
+                            {{match.Challenger.DisplayName}} vs {{match.Opponent.DisplayName}}
 
-                        <span>
-                            <a class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="selectMatch(match)">Finish Game</a>
-                        </span>
-                        <br />
-                        <span class="small" am-time-ago="match.MatchUpdated"></span>
-                    </li>
-                </ul>
+                            <span>
+                                <a class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="selectMatch(match)">Finish Game</a>
+                            </span>
+                            <br />
+                            <span class="small" am-time-ago="match.MatchUpdated"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-hide="myupcomingmatches.length > 0">
+                    <span class="small">No upcoming matches!</span>
+                </div>
 
                 <h3>Last 5 played games</h3>
 
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="match in myplayedmatches">
-                        {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}  
+                <div ng-hide="myplayedmatches.length == 0">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="match in myplayedmatches">
+                            {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}
 
-                        <span class="label label-success" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints < match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints > match.OpponentPoints)">WON</span>
-                        <span class="label label-danger" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints > match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints < match.OpponentPoints)">LOST</span>
-                        <br />
-                        <span class="small" am-time-ago="match.MatchUpdated"></span>
-                    </li>
-                </ul>
+                            <span class="label label-success" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints < match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints > match.OpponentPoints)">WON</span>
+                            <span class="label label-danger" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints > match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints < match.OpponentPoints)">LOST</span>
+                            <br />
+                            <span class="small" am-time-ago="match.MatchUpdated"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-hide="myplayedmatches.length > 0">
+                    <span class="small">You have not yet finished a game!</span>
+                </div>
             </div>
 
             <div class="col-xs-8">
