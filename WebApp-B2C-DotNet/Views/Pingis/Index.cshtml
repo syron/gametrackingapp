@@ -55,6 +55,8 @@
                         <span ng-hide="match.Challenger.UserId == currentUserId">
                             <a class="btn btn-success" ng-click="acceptMatch(match.MatchId)">Accept</a> <a class="btn btn-danger" ng-click="declineMatch(match.MatchId)">Decline</a>
                         </span>
+                        <br />
+                        <span class="small" am-time-ago="match.MatchUpdated"></span>
                     </li>
                 </ul>
             </div>
@@ -68,6 +70,8 @@
                         <span>
                             <a class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="selectMatch(match)">Finish Game</a>
                         </span>
+                        <br />
+                        <span class="small" am-time-ago="match.MatchUpdated"></span>
                     </li>
                 </ul>
             </div>
@@ -80,6 +84,8 @@
 
                         <span class="label label-success" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints < match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints > match.OpponentPoints)">WON</span>
                         <span class="label label-danger" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints > match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints < match.OpponentPoints)">LOST</span>
+                        <br />
+                        <span class="small" am-time-ago="match.MatchUpdated"></span>
                     </li>
                 </ul>
             </div>
