@@ -10,8 +10,6 @@ namespace Pingis.Models
     {
         Challenged = 0,
         Accepted = 1,
-        InProgress = 2,
-        Done = 3,
-        Aborted = 4
+        Done = 2
     }
 }

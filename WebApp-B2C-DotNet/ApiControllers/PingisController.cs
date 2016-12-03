@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Security.Claims;
+using WebApp_OpenIDConnect_DotNet_B2C.Models;
 
 namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 {
@@ -76,6 +77,30 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             Users users = new Users();
 
             return users.GetAll();
+        }
+
+        [HttpGet]
+        [Route("api/pingis/users/toplist")]
+        public IEnumerable<HighscorePosition> Toplist(string by, int top=5)
+        {
+            Users usersDal = new Pingis.DAL.Users();
+            Matches matchesDal = new Matches();
+            var users = usersDal.GetAll().Select(u => new User(u, matchesDal, usersDal));
+            List<HighscorePosition> highscore = new List<HighscorePosition>();
+            if (by == "matchCount")
+            {
+                foreach (var user in users)
+                {
+                    var matches = user.Matches.Where(m => m.Status == 2);
+                    int value = 0;
+                    if (matches != null)
+                    {
+                        value = matches.Count();
+                    }
+                    highscore.Add(new HighscorePosition() { User = user, Value = value });
+                }
+            } else { return null; }
+            return highscore.OrderByDescending(hs => hs.Value).Take(top);
         }
     }
 }

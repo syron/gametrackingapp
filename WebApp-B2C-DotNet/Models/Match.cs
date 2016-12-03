@@ -17,9 +17,10 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Models
             Timestamp = match.Timestamp;
             MatchUpdated = match.MatchUpdated;
             MatchId = match.MatchId;
+            Status = match.Status;
 
-            Opponent = new Models.User(users.GetByUserId(match.OpponentId));
-            Challenger = new Models.User(users.GetByUserId(match.ChallengerId));
+            Opponent = new User(users.GetByUserId(match.OpponentId));
+            Challenger = new User(users.GetByUserId(match.ChallengerId));
         }
         public string MatchId { get; set; }
         public User Challenger { get; set; }
@@ -28,6 +29,6 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Models
         public int OpponentPoints { get; set; }
         public DateTimeOffset Timestamp { get; set; }
         public DateTimeOffset MatchUpdated { get; set; }
-        public MatchStatus Status { get; set; }
+        public int Status { get; set; }
     }
 }
