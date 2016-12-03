@@ -101,9 +101,24 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         {
             Matches matches = new Matches();
             Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
+            string userId = objectId.Value;
+
+            var currentUserMatches = matches.GetMatchesByUserId(userId);
 
             var matchId = Guid.NewGuid();
-            matches.RegisterMatch(new MatchEntity(matchId, objectId.Value, opponentId));
+            var matchEntity = new MatchEntity(matchId, objectId.Value, opponentId);
+            if (currentUserMatches == null) 
+                matches.RegisterMatch(matchEntity);
+
+            if (currentUserMatches.Any(cu => cu.Status == 0 || cu.Status == 1))
+            {
+                // do nothing
+                return null;
+            }
+            else
+            {
+                matches.RegisterMatch(matchEntity);
+            }
 
             return matches.GetMatchById(matchId);
         }

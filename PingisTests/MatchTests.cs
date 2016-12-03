@@ -110,8 +110,7 @@ namespace PingisTests
             entity.ChallengerPoints = 11;
 
             entity.Status = 1;
-
-
+            
             matches.Update(entity);
 
             entity = matches.GetMatchById(matchGuid);
