@@ -18,7 +18,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
     public class MatchesController : ApiController
     {
         [HttpGet]
-        public List<Match> Get(string userId = null, int? status = null)
+        public List<Match> Get(string userId = null, int? status = null, int? top = null)
         {
             Matches matches = new Matches();
             Users users = new Users();
@@ -50,7 +50,13 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 result.Add(m);
             }
 
-            return result.OrderByDescending(r => r.Timestamp).ToList();
+            result = result.OrderByDescending(r => r.Timestamp).ToList();
+
+            if (top.HasValue)
+            {
+                return result.Take(top.Value).ToList();
+            }
+            return result;
         }
 
         [HttpGet]

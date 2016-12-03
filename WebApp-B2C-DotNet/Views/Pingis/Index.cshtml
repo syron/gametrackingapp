@@ -74,12 +74,6 @@
             <div class="col-md-4">
                 <h3>Last played games</h3>
 
-                @*<table class="table">
-                    <tr ng-repeat="match in myplayedmatches">
-
-                    </tr>
-                </table>*@
-
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="match in myplayedmatches">
                         {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}  

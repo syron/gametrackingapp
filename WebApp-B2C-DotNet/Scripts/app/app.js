@@ -23,12 +23,14 @@ app.factory('matchService', function ($http) {
 challenge: function (opponentId) {
             return $http.get('/api/matches/challenge?opponentId=' + opponentId);
         },
-        matches: function (userId = null, status = null) {
+        matches: function (userId = null, status = null, top = null) {
             var data = {};
             if (userId !== null)
                 data.userId = userId;
             if (status !== null)
                 data.status = status;
+            if (top !== null)
+                data.top = top;
             return $http.get('/api/matches', {params: data });
         },
         matchesByUserId: function (userId) {
@@ -131,8 +133,8 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
             $scope.matches = d.data;
         });
 
-        // get matches 
-        matchService.matches($scope.currentUserId, 2).then(function (d) {
+        // get my played matches 
+        matchService.matches($scope.currentUserId, 2, 5).then(function (d) {
             $scope.myplayedmatches = d.data;
         });
 
@@ -166,7 +168,7 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
             for (var i = 0; i < d.data.length; i++) {
                 var user = d.data[i];
 
-                if (user.UserId != $scope.currentUserId) 
+                if (user.UserId !== $scope.currentUserId) 
                     $scope.users.push(user);
             }
         });
