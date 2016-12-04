@@ -73,7 +73,7 @@ app.directive('player', function () {
     return {
         restrict: 'E',
         scope: { user: '=' },
-        template: '{{user.DisplayName}}'
+        template: '<a href="#" title="Coming soon...">{{user.DisplayName}}</a>'
     };
 });
 
