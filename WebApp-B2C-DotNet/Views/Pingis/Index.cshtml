@@ -34,17 +34,27 @@
 
 
     <div ng-hide="currentUserIsRegistered == false">
-        <a class="btn btn-info" ng-click="unregisterMe()">Unregister</a>
 
-        <h1>My Matches</h1>
+        <h1>Pingis</h1>
+
+        <!-- Single button -->
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-cog"></i> Settings <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" ng-click="unregisterMe()">Unregister</a></li>
+            </ul>
+        </div>
 
         <div class="challenge">
+            Challenge player
             <select ng-model="selectedUserToChallenge">
                 <option ng-repeat="user in users" value="{{user.UserId}}">
                     {{user.DisplayName}}
                 </option>
             </select>
-            <input type="button" class="btn btn-success" ng-click="challenge()" value="Challenge" />
+            <input type="button" class="btn btn-info" ng-click="challenge()" value="Challenge" />
         </div>
 
 
@@ -110,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-md-6">
 
 
                 <h3>All Matches</h3>
