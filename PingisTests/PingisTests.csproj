@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EloRatingTests.cs" />
     <Compile Include="MatchTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserTests.cs" />

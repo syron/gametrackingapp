@@ -1134,6 +1134,10 @@
       <Project>{cf70b5f3-c166-49b7-9217-eafb0620d926}</Project>
       <Name>Pingis.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pingis.Logic\Pingis.Logic.csproj">
+      <Project>{a0c81753-866e-4238-9ab5-03574aff7ba6}</Project>
+      <Name>Pingis.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pingis.Models\Pingis.Models.csproj">
       <Project>{1bcc9155-3187-493c-851c-eda438ae171d}</Project>
       <Name>Pingis.Models</Name>

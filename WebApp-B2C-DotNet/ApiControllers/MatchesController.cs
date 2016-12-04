@@ -2,6 +2,7 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using Pingis.DAL;
+using Pingis.Logic;
 using Pingis.Models;
 using System;
 using System.Collections.Generic;
@@ -198,11 +199,12 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         [Route("api/matches/finish/{matchId}")]
         public bool Finish(string matchId, int challengerPoints, int opponentPoints)
         {
+            Users users = new Users();
             Matches matches = new Matches();
             Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
             var userId = objectId.Value;
             var match = matches.GetMatchById(Guid.Parse(matchId));
-
+            
             if (match.ChallengerId == userId || match.OpponentId == userId)
             {
                 if (match.Status != 1)
@@ -212,6 +214,17 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 match.ChallengerPoints = challengerPoints;
                 match.OpponentPoints = opponentPoints;
                 matches.Update(match);
+
+                var challenger = users.GetByUserId(match.ChallengerId);
+                var opponent = users.GetByUserId(match.OpponentId);
+
+                // update users
+                EloRating elo = new EloRating(challenger.EloRating, opponent.EloRating, challengerPoints, opponentPoints);
+                challenger.EloRating = elo.FinalResult1;
+                opponent.EloRating = elo.FinalResult2;
+
+                users.Update(challenger);
+                users.Update(opponent);
                     
                 return true;
 

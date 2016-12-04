@@ -42,6 +42,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 
             if (user == null)
             {
+                
                 users.Register(new UserEntity(objectId.Value, displayName.Value));
                 return true;
             }

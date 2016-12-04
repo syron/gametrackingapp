@@ -48,5 +48,12 @@ namespace Pingis.DAL
 
             table.Execute(deleteOperation);
         }
+
+        public void Update(UserEntity user)
+        {
+            TableOperation updateOperation = TableOperation.InsertOrReplace(user);
+            table.Execute(updateOperation);
+        }
+
     }
 }

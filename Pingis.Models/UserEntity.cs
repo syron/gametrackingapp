@@ -12,13 +12,16 @@ namespace Pingis.Models
         {
             this.PartitionKey = userId;
             this.RowKey = displayName;
+            this.EloRating = 1000;
         }
 
-        public UserEntity() {
-            
+        public UserEntity()
+        {
+            this.EloRating = 1000;
         }
 
         public string UserId { get { return this.PartitionKey; } }
         public string DisplayName { get { return this.RowKey; } }
+        public Double EloRating { get; set; }
     }
 }
