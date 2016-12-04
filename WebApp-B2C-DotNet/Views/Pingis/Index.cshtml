@@ -32,7 +32,6 @@
     </div>
 
 
-
     <div ng-hide="currentUserIsRegistered == false">
 
         <h1>Pingis</h1>
@@ -106,7 +105,9 @@
                 <div ng-hide="myplayedmatches.length == 0">
                     <ul class="list-group">
                         <li class="list-group-item" ng-repeat="match in myplayedmatches">
-                            {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}
+                            <player user="match.Challenger"></player>
+                            {{match.ChallengerPoints}} : {{ match.OpponentPoints }}
+                            <player user="match.Opponent"></player>
 
                             <span class="label label-success" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints < match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints > match.OpponentPoints)">WON</span>
                             <span class="label label-danger" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints > match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints < match.OpponentPoints)">LOST</span>
@@ -137,7 +138,9 @@
                                 <span am-time-ago="match.MatchUpdated"></span>
                             </td>
                             <td>
-                                {{match.Challenger.DisplayName}} {{match.ChallengerPoints}} : {{ match.OpponentPoints }} {{match.Opponent.DisplayName}}
+                                <player user="match.Challenger"></player>
+                                {{match.ChallengerPoints}} : {{ match.OpponentPoints }}
+                                <player user="match.Opponent"></player>
                             </td>
                         </tr>
                     </tbody>

@@ -68,6 +68,16 @@ challenge: function (opponentId) {
     };
 });
 
+
+app.directive('player', function () {
+    return {
+        restrict: 'E',
+        scope: { user: '=' },
+        template: '{{user.DisplayName}}'
+    };
+});
+
+
 app.constant("moment", moment);
 
 app.controller('PingisCtrl', function (userService, matchService, moment, $scope) {
@@ -189,7 +199,6 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
             $scope.highscoreByWinCount = d.data;
         });
         userService.highscore('ELO').then(function (d) {
-            console.log(d);
             $scope.highscoreByELO = d.data;
         });
     }
