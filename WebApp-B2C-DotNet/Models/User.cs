@@ -19,6 +19,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Models
         {
             this.UserId = entity.UserId;
             this.DisplayName = entity.DisplayName;
+            this.EloRating = entity.EloRating;
 
             this.Matches = new List<Match>();
 
@@ -30,5 +31,6 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Models
         public string UserId { get; set; }
         public string DisplayName { get; set; }
         public List<Match> Matches { get; set; }
+        public double EloRating { get; set; }
     }
 }

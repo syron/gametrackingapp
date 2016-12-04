@@ -147,12 +147,23 @@
 
 
                     <ul class="nav nav-tabs">
-                        <li class="active small"><a data-toggle="tab" href="#highscoreMatchCount">Match Count</a></li>
+                        <li class="active small"><a data-toggle="tab" href="#highscoreElo">ELO</a></li>
+                        <li class="small"><a data-toggle="tab" href="#highscoreMatchCount">Match Count</a></li>
                         <li class="small"><a data-toggle="tab" href="#highscoreWinCount">Win Count</a></li>
                     </ul>
 
                     <div class="tab-content">
-                        <div id="highscoreMatchCount" class="tab-pane fade in active">
+
+                        <div id="highscoreElo" class="tab-pane fade in active">
+
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="player in highscoreByELO">
+                                    {{$index+1}}. {{player.User.DisplayName}} ({{player.Value}})
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="highscoreMatchCount" class="tab-pane fade in">
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByMatchCount">

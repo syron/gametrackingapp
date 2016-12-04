@@ -83,6 +83,7 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
     $scope.selectedMatch = null;
     $scope.highscoreByMatchCount = [];
     $scope.highscoreByWinCount = [];
+    $scope.highscoreByELO = [];
 
     $scope.currentDate = new moment();
 
@@ -186,6 +187,10 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
         });
         userService.highscore('winCount').then(function (d) {
             $scope.highscoreByWinCount = d.data;
+        });
+        userService.highscore('ELO').then(function (d) {
+            console.log(d);
+            $scope.highscoreByELO = d.data;
         });
     }
 

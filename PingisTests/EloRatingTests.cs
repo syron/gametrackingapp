@@ -167,21 +167,16 @@ namespace PingisTests
         public void init()
         {
             var playerA = new Player("ROMA", 1000);
-            var playerB = new Player("RORO", 1000);
-            var playerC = new Player("ERAN", 1000);
+            var playerB = new Player("bobbin", 1000);
 
             // playera playerb 11:6
             var elorating = new EloRating(playerA.Rating, playerB.Rating, 11, 6);
             playerA.Rating = elorating.FinalResult1;
             playerB.Rating = elorating.FinalResult2;
 
-            elorating = new EloRating(playerC.Rating, playerA.Rating, 5, 11);
-            playerC.Rating = elorating.FinalResult1;
+            elorating = new EloRating(playerB.Rating, playerA.Rating, 6, 11);
+            playerB.Rating = elorating.FinalResult1;
             playerA.Rating = elorating.FinalResult2;
-
-            elorating = new EloRating(playerC.Rating, playerB.Rating, 11, 6);
-            playerC.Rating = elorating.FinalResult1;
-            playerB.Rating = elorating.FinalResult2;
         }
     }
 }

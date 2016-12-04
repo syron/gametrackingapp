@@ -115,6 +115,13 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                     highscore.Add(new HighscorePosition() { User = user, Value = userWins });
                 }
             }
+            else if (by == "ELO")
+            {
+                foreach (var user in users)
+                {
+                    highscore.Add(new HighscorePosition() { User = user, Value = (int)user.EloRating });
+                }
+            }
             else { return null; }
             return highscore.OrderByDescending(hs => hs.Value).Take(top);
         }
