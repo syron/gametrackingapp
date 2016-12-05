@@ -160,7 +160,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 matches.RegisterMatch(matchEntity);
             else
             {
-                if (currentUserMatches.Any(cu => cu.Status == 0 || cu.Status == 1))
+
+                if (currentUserMatches.Any(cu => (cu.Status == 0 || cu.Status == 1) && cu.OpponentId == opponentId))
                 {
                     // do nothing
                     return null;

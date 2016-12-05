@@ -69,12 +69,22 @@ namespace PingisTests
         }
     }
 
+   
+
     public class Player
     {
         public Player(string name, int rating)
         {
             Name = name;
             Rating = rating;
+        }
+
+        public bool Peter()
+        {
+            int a = 0;
+            int b = 2;
+            string p = $"{a}{b}";
+            return true;
         }
 
         public string Name { get; set; }
