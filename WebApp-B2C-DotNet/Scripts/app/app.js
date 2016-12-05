@@ -69,22 +69,26 @@ challenge: function (opponentId) {
 });
 
 
-app.directive('player', function () {
+app.directive('player', function (matchService) {
     return {
         restrict: 'E',
-        scope: { user: '=', current: '=' },
+        scope: {
+            user: '=',
+            current: '='
+        },
         template: '<div class="dropdown" style="display: inline;">' +
         '<a href="#" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria- haspopup="true" aria- expanded="true">' +
         '{{ user.DisplayName }}' +
         '</a>' +
         '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
-        '    <li ng-hide="user.UserId == current"><a href="#">Quick Challenge</a></li>' +
+        '    <li ng-hide="user.UserId == current"><a href="#" ng-click="$parent.challenge(user.UserId)">Quick Challenge</a></li>' +
         '    <li><a title="Coming soon..." href="#">View Profile</a></li>' +
         '</ul>' +
         '</div>',
         link: function ($scope, element, attrs) {
-            console.log(attrs);
+            // do whatever you want :)
         }
+
     };
 });
 
@@ -148,8 +152,8 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
         });
     };
 
-    $scope.challenge = function () {
-        matchService.challenge($scope.selectedUserToChallenge).then(function (d) {
+    $scope.challenge = function (userId) {
+        matchService.challenge(userId).then(function (d) {
             $scope.loadMatches();
         });
     };
