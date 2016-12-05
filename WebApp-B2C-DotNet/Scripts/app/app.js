@@ -82,7 +82,7 @@ app.directive('player', function (matchService) {
         '</a>' +
         '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
         '    <li ng-hide="user.UserId == current"><a href="#" ng-click="$parent.challenge(user.UserId)">Quick Challenge</a></li>' +
-        '    <li><a title="Coming soon..." href="#">View Profile</a></li>' +
+        '    <li><a title="Coming soon..." href="#"><s>View Profile</s></a></li>' +
         '</ul>' +
         '</div>',
         link: function ($scope, element, attrs) {
