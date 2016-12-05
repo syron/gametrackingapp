@@ -29,6 +29,16 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         }
 
         [HttpGet]
+        [Route("api/pingis/user")]
+        public UserEntity User(string userId)
+        {
+            Users users = new Pingis.DAL.Users();
+
+            var user = users.GetByUserId(userId);
+            return user;
+        }
+
+        [HttpGet]
         [Route("api/pingis/register")]
         public bool Register()
         {

@@ -17,6 +17,9 @@ app.factory('userService', function ($http) {
         },
         highscore: function (by) {
             return $http.get('/api/pingis/users/toplist?by=' + by);
+        },
+        user: function (userId) {
+            return $http.get('/api/pingis/user?userId=' + userId);
         }
     };
 });
@@ -104,6 +107,7 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
     $scope.mychallengedmatches = [];
     $scope.currentUserIsRegistered = false;
     $scope.currentUserId = "";
+    $scope.currentUser = null;
     $scope.selectedUserToChallenge = null;
     $scope.selectedMatch = null;
     $scope.highscoreByMatchCount = [];
@@ -200,7 +204,7 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
             for (var i = 0; i < d.data.length; i++) {
                 var user = d.data[i];
 
-                if (user.UserId !== $scope.currentUserId) 
+                if (user.UserId !== $scope.currentUserId)
                     $scope.users.push(user);
             }
         });
@@ -218,10 +222,17 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
         });
     };
 
+    $scope.loadCurrentUser = function () {
+        userService.user($scope.currentUserId).then(function (d) {
+            $scope.currentUser = d.data;
+        });
+    };
+
     $scope.initPingisGame = function () {
         $scope.loadUsers();
         $scope.loadMatches();
         $scope.loadHighScore();
+        $scope.loadCurrentUser();
     };
 
     $scope.refresh = function () {
