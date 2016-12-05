@@ -12,17 +12,15 @@ using WebApp_OpenIDConnect_DotNet_B2C.Models;
 namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 {
     [Authorize]
-    public class PingisController : ApiController
+    public class PingisController : BaseApiController
     {
         [HttpGet]
         [Route("api/pingis/isregistered")]
         public bool IsRegistered()
         {
-            Users users = new Users();
-
             Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
 
-            var user = users.GetByUserId(objectId.Value);
+            var user = Users.GetByUserId(objectId.Value);
 
             if (user == null) return false;
             return true;
@@ -32,9 +30,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         [Route("api/pingis/user")]
         public UserEntity User(string userId)
         {
-            Users users = new Pingis.DAL.Users();
-
-            var user = users.GetByUserId(userId);
+            var user = Users.GetByUserId(userId);
             return user;
         }
 
@@ -43,17 +39,16 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         public bool Register()
         {
             UserEntity entity = new UserEntity(); 
-            Users users = new Users();
-
+            
             Claim displayName = ClaimsPrincipal.Current.FindFirst(ClaimsPrincipal.Current.Identities.First().NameClaimType);
             Claim objectId =   ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
 
-            var user = users.GetByUserId(objectId.Value);
+            var user = Users.GetByUserId(objectId.Value);
 
             if (user == null)
             {
                 
-                users.Register(new UserEntity(objectId.Value, displayName.Value));
+                Users.Register(new UserEntity(objectId.Value, displayName.Value));
                 return true;
             }
 
@@ -65,16 +60,15 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         public bool Unregister()
         {
             UserEntity entity = new UserEntity();
-            Users users = new Users();
-
+            
             Claim displayName = ClaimsPrincipal.Current.FindFirst(ClaimsPrincipal.Current.Identities.First().NameClaimType);
             Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
 
-            var user = users.GetByUserId(objectId.Value);
+            var user = Users.GetByUserId(objectId.Value);
 
             if (user != null)
             {
-                users.Unregister(user);
+                Users.Unregister(user);
                 return true;
             }
 
@@ -83,20 +77,16 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 
         [HttpGet]
         [Route("api/pingis/users")]
-        public List<UserEntity> Users()
+        public List<UserEntity> GetUsers()
         {
-            Users users = new Users();
-
-            return users.GetAll();
+            return Users.GetAll();
         }
 
         [HttpGet]
         [Route("api/pingis/users/toplist")]
         public IEnumerable<HighscorePosition> Toplist(string by, int top=5)
         {
-            Users usersDal = new Pingis.DAL.Users();
-            Matches matchesDal = new Matches();
-            var users = usersDal.GetAll().Select(u => new User(u, matchesDal, usersDal));
+            var users = Users.GetAll().Select(u => new User(u, Matches, Users));
             List<HighscorePosition> highscore = new List<HighscorePosition>();
             if (by == "matchCount")
             {

@@ -190,6 +190,7 @@
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\PingisController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -1141,6 +1142,10 @@
     <ProjectReference Include="..\Pingis.Models\Pingis.Models.csproj">
       <Project>{1bcc9155-3187-493c-851c-eda438ae171d}</Project>
       <Name>Pingis.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pingis.Notifications\Pingis.Notifications.csproj">
+      <Project>{1916db85-10de-443b-a0cf-e08070c8d8f6}</Project>
+      <Name>Pingis.Notifications</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

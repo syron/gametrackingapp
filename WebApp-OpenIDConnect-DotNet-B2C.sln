@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pingis.Models", "Pingis.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pingis.Logic", "Pingis.Logic\Pingis.Logic.csproj", "{A0C81753-866E-4238-9AB5-03574AFF7BA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pingis.Notifications", "Pingis.Notifications\Pingis.Notifications.csproj", "{1916DB85-10DE-443B-A0CF-E08070C8D8F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{A0C81753-866E-4238-9AB5-03574AFF7BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C81753-866E-4238-9AB5-03574AFF7BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C81753-866E-4238-9AB5-03574AFF7BA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1916DB85-10DE-443B-A0CF-E08070C8D8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1916DB85-10DE-443B-A0CF-E08070C8D8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1916DB85-10DE-443B-A0CF-E08070C8D8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1916DB85-10DE-443B-A0CF-E08070C8D8F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
