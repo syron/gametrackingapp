@@ -216,12 +216,17 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
         userService.highscore('ELO').then(function (d) {
             $scope.highscoreByELO = d.data;
         });
-    }
+    };
 
     $scope.initPingisGame = function () {
         $scope.loadUsers();
         $scope.loadMatches();
         $scope.loadHighScore();
+    };
+
+    $scope.refresh = function () {
+        toastr.info("Refreshing...");
+        $scope.initPingisGame();
     };
 
     $scope.init = function (userId) {
