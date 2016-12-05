@@ -3,7 +3,7 @@
     <text>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a id="profile-link">@User.Identity.Name</a>
+                <a id="profile-link"><i class="fa fa-user"></i> @User.Identity.Name</a>
                 <div id="profile-options" class="nav navbar-nav navbar-right">
                     <ul class="profile-links">
                         <li class="profile-link">
@@ -12,16 +12,19 @@
                     </ul>
                 </div>
             </li>
-            <li>
+            <li><a href="@Url.Action("SignOut", "Account")"><i class="fa fa-sign-out"></i> Sign out</a></li>
+            @*<li>
                 @Html.ActionLink("Sign out", "SignOut", "Account")
-            </li>
+            </li>*@
         </ul>
     </text>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Sign up", "SignUp", "Account", routeValues: null, htmlAttributes: new { id = "signUpLink" })</li>
-        <li>@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li><a href="@Url.Action("SignUp", "Account")"><i class="fa fa-plus-square"></i> Sign up</a></li>
+        <li><a href="@Url.Action("SignIn", "Account")"><i class="fa fa-sign-in"></i> Sign in</a></li>
+        @*<li>@Html.ActionLink("Sign up", "SignUp", "Account", routeValues: null, htmlAttributes: new { id = "signUpLink" })</li>
+        <li>@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
     </ul>
 }
