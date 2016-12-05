@@ -72,16 +72,19 @@ challenge: function (opponentId) {
 app.directive('player', function () {
     return {
         restrict: 'E',
-        scope: { user: '=', currentUserId: '=' },
+        scope: { user: '=', current: '=' },
         template: '<div class="dropdown" style="display: inline;">' +
         '<a href="#" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria- haspopup="true" aria- expanded="true">' +
-        '{{ user.DisplayName }} {{currentUserId}}' +
+        '{{ user.DisplayName }}' +
         '</a>' +
         '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
-        '    <li ng-hide="user.UserId == currentUserId"><a href="#">Quick Challenge</a></li>' +
+        '    <li ng-hide="user.UserId == current"><a href="#">Quick Challenge</a></li>' +
         '    <li><a title="Coming soon..." href="#">View Profile</a></li>' +
         '</ul>' +
-        '</div>'
+        '</div>',
+        link: function ($scope, element, attrs) {
+            console.log(attrs);
+        }
     };
 });
 

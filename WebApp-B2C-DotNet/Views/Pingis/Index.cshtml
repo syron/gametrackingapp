@@ -105,9 +105,9 @@
                 <div ng-hide="myplayedmatches.length == 0">
                     <ul class="list-group">
                         <li class="list-group-item" ng-repeat="match in myplayedmatches">
-                            <player user="match.Challenger"></player>
+                            <player user="match.Challenger" current="currentUserId"></player>
                             {{match.ChallengerPoints}} : {{ match.OpponentPoints }}
-                            <player user="match.Opponent"></player>
+                            <player user="match.Opponent" current="currentUserId"></player>
 
                             <span class="label label-success" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints < match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints > match.OpponentPoints)">WON</span>
                             <span class="label label-danger" ng-hide="(match.Challenger.UserId == currentUserId && match.ChallengerPoints > match.OpponentPoints) || (match.Challenger.UserId != currentUserId && match.ChallengerPoints < match.OpponentPoints)">LOST</span>
@@ -138,9 +138,9 @@
                                 <span am-time-ago="match.MatchUpdated"></span>
                             </td>
                             <td>
-                                <player user="match.Challenger" currentUserId="currentUserId"></player>
+                                <player user="match.Challenger" current="currentUserId"></player>
                                 {{match.ChallengerPoints}} : {{ match.OpponentPoints }}
-                                <player user="match.Opponent"></player>
+                                <player user="match.Opponent" current="currentUserId"></player>
                             </td>
                         </tr>
                     </tbody>
@@ -171,7 +171,7 @@
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByELO">
-                                    {{$index+1}}. <player user="player.User"></player> ({{player.Value}})
+                                    {{$index+1}}. <player user="player.User" current="currentUserId"></player> ({{player.Value}})
                                 </li>
                             </ul>
                         </div>
@@ -180,7 +180,7 @@
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByMatchCount">
-                                    {{$index+1}}. <player user="player.User"></player> ({{player.Value}})
+                                    {{$index+1}}. <player user="player.User" current="currentUserId"></player> ({{player.Value}})
                                 </li>
                             </ul>
                         </div>
@@ -188,7 +188,7 @@
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByWinCount">
-                                    {{$index+1}}. <player user="player.User"></player> ({{player.Value}})
+                                    {{$index+1}}. <player user="player.User" current="currentUserId"></player> ({{player.Value}})
                                 </li>
                             </ul>
                         </div>
