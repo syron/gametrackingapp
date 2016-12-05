@@ -86,7 +86,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         [Route("api/pingis/users/toplist")]
         public IEnumerable<HighscorePosition> Toplist(string by, int top=5)
         {
-            var users = Users.GetAll().Select(u => new User(u, Matches, Users));
+            var users = Users.GetAll().Select(u => new User(u, Matches, Users)).Where(u => u.Matches.Where(m => m.Status == 2).Count() > 0);
             List<HighscorePosition> highscore = new List<HighscorePosition>();
             if (by == "matchCount")
             {
