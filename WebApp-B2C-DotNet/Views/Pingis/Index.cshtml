@@ -171,7 +171,7 @@
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByELO">
-                                    {{$index+1}}. <player user="player.User" current="currentUserId"></player> ({{player.Value}})
+                                    {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
                                 </li>
                             </ul>
                         </div>
@@ -180,7 +180,7 @@
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByMatchCount">
-                                    {{$index+1}}. <player user="player.User" current="currentUserId"></player> ({{player.Value}})
+                                    {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
                                 </li>
                             </ul>
                         </div>
@@ -188,7 +188,7 @@
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="player in highscoreByWinCount">
-                                    {{$index+1}}. <player user="player.User" current="currentUserId"></player> ({{player.Value}})
+                                    {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
                                 </li>
                             </ul>
                         </div>
