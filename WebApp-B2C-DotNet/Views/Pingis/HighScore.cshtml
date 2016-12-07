@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "HighScore";
+    Layout = "~/Views/Shared/_LayoutWidget.cshtml";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        app.controller('PingisHighscoreCtrl', function (userService, matchService, moment, $scope) {
+            $scope.highscoreByELO = [];
+            
+            $scope.loadHighScore = function () {
+                userService.highscore('ELO').then(function (d) {
+                    $scope.highscoreByELO = d.data;
+                });
+            };
+
+            $scope.loadHighScore();
+        });
+    </script>
+}
+
+<div id="highscoreElo" class="tab-pane fade in active" ng-controller="PingisHighscoreCtrl"> 
+
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="player in highscoreByELO">
+            {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
+        </li>
+    </ul>
+
+</div>

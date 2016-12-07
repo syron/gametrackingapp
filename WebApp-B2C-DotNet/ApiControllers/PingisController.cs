@@ -11,9 +11,9 @@ using WebApp_OpenIDConnect_DotNet_B2C.Models;
 
 namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 {
-    [Authorize]
     public class PingisController : BaseApiController
     {
+        [Authorize]
         [HttpGet]
         [Route("api/pingis/isregistered")]
         public bool IsRegistered()
@@ -26,6 +26,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             return true;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/pingis/user")]
         public UserEntity User(string userId)
@@ -34,6 +35,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             return user;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/pingis/register")]
         public bool Register()
@@ -55,6 +57,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             return false;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/pingis/unregister")]
         public bool Unregister()
@@ -75,13 +78,14 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             return false;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/pingis/users")]
         public List<UserEntity> GetUsers()
         {
             return Users.GetAll();
         }
-
+        
         [HttpGet]
         [Route("api/pingis/users/toplist")]
         public IEnumerable<HighscorePosition> Toplist(string by, int top=5)

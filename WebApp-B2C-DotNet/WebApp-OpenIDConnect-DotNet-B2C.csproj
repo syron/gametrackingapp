@@ -1121,6 +1121,8 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Pingis\Index.cshtml" />
     <Content Include="Views\Pingis\Register.cshtml" />
+    <Content Include="Views\Pingis\HighScore.cshtml" />
+    <Content Include="Views\Shared\_LayoutWidget.cshtml" />
     <None Include="Web.Base.config" />
   </ItemGroup>
   <ItemGroup>
