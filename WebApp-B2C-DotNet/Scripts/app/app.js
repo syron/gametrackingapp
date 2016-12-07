@@ -1,7 +1,7 @@
 ﻿
-var app = angular.module('gameapp', ['angularMoment']);
+var app = angular.module('gameapp', ['angularMoment', 'AngularEtag']);
 
-app.factory('userService', function ($http) {
+app.factory('userService', function ($http, ehttp) {
     return {
         users: function () {
             return $http.get('/api/pingis/users');
@@ -15,11 +15,11 @@ app.factory('userService', function ($http) {
         unregister: function () {
             return $http.get('/api/pingis/unregister');
         },
-        highscore: function (by) {
-            return $http.get('/api/pingis/users/toplist?by=' + by);
-        },
         user: function (userId) {
             return $http.get('/api/pingis/user?userId=' + userId);
+        },
+        highscore: function (by) {
+            return ehttp.get('/api/pingis/users/toplist?by=' + by);
         }
     };
 });

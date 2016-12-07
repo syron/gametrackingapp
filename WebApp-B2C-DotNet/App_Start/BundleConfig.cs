@@ -16,13 +16,14 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/angular.min.js",
                       "~/Scripts/toastr.min.js",
                       "~/Scripts/moment.min.js",
                       "~/Scripts/angular-moment.min.js",
+                      "~/Scripts/angular-etag.js",
                       "~/Scripts/select2.min.js",
                       "~/Scripts/app/app.js"));
 

@@ -131,6 +131,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             }
             else { return null; }
 
+            highscore = highscore.OrderByDescending(h => h.Value).ToList();
+
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new ObjectContent<IEnumerable<HighscorePosition>>(highscore, new JsonMediaTypeFormatter())
