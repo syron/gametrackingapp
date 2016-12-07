@@ -14,13 +14,19 @@
                 userService.highscore('ELO').then(function (d) {
                     $scope.highscoreByELO = d.data;
 
-                    console.log($scope.highscoreByELO);
+                    setTimeout(function () {
+                        $scope.init();
+                    }, 30000);
+                }, function (e) {
+                    console.log(e);
                 });
             };
 
+            $scope.init = function () {
+                $scope.loadHighScore();
+            }
 
-
-            $scope.loadHighScore();
+            $scope.init();
         });
     </script>
 }

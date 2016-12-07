@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Security.Claims;
 using WebApp_OpenIDConnect_DotNet_B2C.Models;
+using WebApp_OpenIDConnect_DotNet_B2C.Filter;
+using System.Net.Http.Formatting;
 
 namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 {
@@ -88,7 +90,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
         
         [HttpGet]
         [Route("api/pingis/users/toplist")]
-        public IEnumerable<HighscorePosition> Toplist(string by, int top=5)
+        [EnableTag]
+        public HttpResponseMessage Toplist(string by, int top=5)
         {
             var users = Users.GetAll().Select(u => new User(u, Matches, Users)).Where(u => u.Matches.Where(m => m.Status == 2).Count() > 0);
             List<HighscorePosition> highscore = new List<HighscorePosition>();
@@ -127,7 +130,11 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 }
             }
             else { return null; }
-            return highscore.OrderByDescending(hs => hs.Value).Take(top);
+
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ObjectContent<IEnumerable<HighscorePosition>>(highscore, new JsonMediaTypeFormatter())
+            };
         }
     }
 }
