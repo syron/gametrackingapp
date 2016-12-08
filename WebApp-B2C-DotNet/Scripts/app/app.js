@@ -16,7 +16,7 @@ app.factory('userService', function ($http, ehttp) {
             return $http.get('/api/pingis/unregister');
         },
         user: function (userId) {
-            return $http.get('/api/pingis/user?userId=' + userId);
+            return ehttp.get('/api/pingis/user?userId=' + userId);
         },
         highscore: function (by) {
             return ehttp.get('/api/pingis/users/toplist?by=' + by);
@@ -210,21 +210,36 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
         });
     };
 
-    $scope.loadHighScore = function () {
+    $scope.loadHighScoreMatchCount = function () {
         userService.highscore('matchCount').then(function (d) {
             $scope.highscoreByMatchCount = d.data;
+            setInterval($scope.loadHighScoreMatchCount, 15000);
         });
+    };
+    $scope.loadHighScoreWinCount = function () {
         userService.highscore('winCount').then(function (d) {
             $scope.highscoreByWinCount = d.data;
+            setInterval($scope.loadHighScoreMatchCount, 15000);
         });
+    };
+    $scope.loadHighScoreELO = function () {
         userService.highscore('ELO').then(function (d) {
             $scope.highscoreByELO = d.data;
+            setInterval($scope.loadHighScoreMatchCount, 15000);
         });
+    };
+
+    $scope.loadHighScore = function () {
+        $scope.loadHighScoreMatchCount();
+        $scope.loadHighScoreWinCount();
+        $scope.loadHighScoreELO();
     };
 
     $scope.loadCurrentUser = function () {
         userService.user($scope.currentUserId).then(function (d) {
             $scope.currentUser = d.data;
+
+            setInterval($scope.loadCurrentUser, 15000);
         });
     };
 
