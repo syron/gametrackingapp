@@ -18,6 +18,14 @@ namespace Pingis.DAL
             table.CreateIfNotExists();
         }
 
+<<<<<<< HEAD
+=======
+        public void Create()
+        {
+            
+        }
+
+>>>>>>> master
         public List<GameModeEntity> GetAll()
         {
             TableQuery<GameModeEntity> query = new TableQuery<GameModeEntity>();
