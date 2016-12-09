@@ -61,7 +61,7 @@ namespace Pingis.DAL
             table.Delete();
         }
 
-        public List<MatchEntity> GetMatchesByUserId(string userId)
+        public List<MatchEntity> GetMatchesByUserId(string userId, int? status = null)
         {
             List<MatchEntity> playedMatches = new List<MatchEntity>();
 
@@ -82,7 +82,15 @@ namespace Pingis.DAL
             }
 
             if (playedMatches.Count > 0)
+            {
+                if (status.HasValue)
+                {
+                    if (playedMatches.Any(m => m.Status == status.Value))
+                        playedMatches = playedMatches.Where(m => m.Status == status.Value).ToList();
+                }
+
                 return playedMatches;
+            }
 
             return null;
         }

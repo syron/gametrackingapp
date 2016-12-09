@@ -172,28 +172,79 @@
 
                         <div id="highscoreElo" class="tab-pane fade in active">
 
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="player in highscoreByELO">
-                                    {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
-                                </li>
-                            </ul>
+
+                            <table class="table table-bordered">
+                                <thead>
+
+                                    <tr>
+                                        <th></th>
+                                        <th>Player</th>
+                                        <th>W:L</th>
+                                        <th>Rating</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="player in highscoreByELO">
+                                        <td>{{$index+1}}.</td>
+                                        <td><i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player></td>
+                                        <td>{{player.User.Wins}}:{{player.User.Losses}}</td>
+                                        <td>{{player.Value}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
                         </div>
 
                         <div id="highscoreMatchCount" class="tab-pane fade in">
 
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="player in highscoreByMatchCount">
-                                    {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
-                                </li>
-                            </ul>
+                            <table class="table table-bordered">
+                                <thead>
+
+                                    <tr>
+                                        <th></th>
+                                        <th>Player</th>
+                                        <th>W:L</th>
+                                        <th>Matches</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="player in highscoreByMatchCount">
+                                        <td>{{$index+1}}.</td>
+                                        <td><i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player></td>
+                                        <td>{{player.User.Wins}}:{{player.User.Losses}}</td>
+                                        <td>{{player.Value}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+
                         </div>
                         <div id="highscoreWinCount" class="tab-pane fade in">
 
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="player in highscoreByWinCount">
-                                    {{$index+1}}. <i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player> ({{player.Value}})
-                                </li>
-                            </ul>
+                            <table class="table table-bordered">
+                                <thead>
+
+                                    <tr>
+                                        <th></th>
+                                        <th>Player</th>
+                                        <th>W:L</th>
+                                        <th>Wins</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="player in highscoreByWinCount">
+                                        <td>{{$index+1}}.</td>
+                                        <td><i class="fa fa-trophy" ng-hide="$index > 2" ng-class="{ gold: $index == 0, silver: $index == 1, bronze: $index == 2}"></i> <player user="player.User" current="currentUserId"></player></td>
+                                        <td>{{player.User.Wins}}:{{player.User.Losses}}</td>
+                                        <td>{{player.Value}}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
                         </div>
                     </div>
 

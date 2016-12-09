@@ -10,6 +10,7 @@ using System.Security.Claims;
 using WebApp_OpenIDConnect_DotNet_B2C.Models;
 using WebApp_OpenIDConnect_DotNet_B2C.Filter;
 using System.Net.Http.Formatting;
+using WebApp_OpenIDConnect_DotNet_B2C.Models.Simple;
 
 namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 {
@@ -105,7 +106,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                     {
                         value = matches.Count();
                     }
-                    highscore.Add(new HighscorePosition() { User = user, Value = value });
+                    highscore.Add(new HighscorePosition() { User = new SimpleUser(user, Matches, Users), Value = value });
                 }
             }
             else if (by == "winCount")
@@ -119,14 +120,14 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
 
                     var userWins = matchesUserChallengeWin.Count() + matchesUserOpponentWin.Count();
 
-                    highscore.Add(new HighscorePosition() { User = user, Value = userWins });
+                    highscore.Add(new HighscorePosition() { User = new SimpleUser(user, Matches, Users), Value = userWins });
                 }
             }
             else if (by == "ELO")
             {
                 foreach (var user in users)
                 {
-                    highscore.Add(new HighscorePosition() { User = user, Value = (int)user.EloRating });
+                    highscore.Add(new HighscorePosition() { User = new SimpleUser(user, Matches, Users), Value = (int)user.EloRating });
                 }
             }
             else { return null; }
