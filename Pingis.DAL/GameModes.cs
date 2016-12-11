@@ -26,14 +26,14 @@ namespace Pingis.DAL
 
         public void Delete(GameModeEntity entity)
         {
-            TableOperation deleteOperation = TableOperation.Delete(user);
+            TableOperation deleteOperation = TableOperation.Delete(entity);
 
             table.Execute(deleteOperation);
         }
 
         public void Update(GameModeEntity entity)
         {
-            TableOperation updateOperation = TableOperation.InsertOrReplace(user);
+            TableOperation updateOperation = TableOperation.InsertOrReplace(entity);
             table.Execute(updateOperation);
         }
         
