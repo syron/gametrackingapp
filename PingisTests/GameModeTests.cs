@@ -39,14 +39,13 @@ namespace PingisTests
             table.CreateIfNotExists();
 
             // insert
-            var matchGuid = Guid.NewGuid();
-            MatchEntity entity = new MatchEntity(matchGuid, "ROMA", "RORO");
+            GameModeEntity entity = GameModeEntity.Create("Sponge", "Famous game of sponge ping pong.");
             
             TableOperation insertOperation = TableOperation.Insert(entity);
             table.Execute(insertOperation);
 
             // get
-            TableQuery<MatchEntity> query = new TableQuery<MatchEntity>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, matchGuid.ToString()));
+            TableQuery<MatchEntity> query = new TableQuery<MatchEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, entity.GameModeId));
 
             var ent = table.ExecuteQuery(query).First();
 

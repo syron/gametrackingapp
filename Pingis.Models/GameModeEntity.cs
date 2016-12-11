@@ -21,6 +21,17 @@ namespace Pingis.Models
             
         }
 
+        public static GameModeEntity Create(string name, string description)
+        {
+            return new GameModeEntity()
+            {
+                PartitionKey = Guid.NewGuid().ToString(),
+                RowKey = DateTimeOffset.UtcNow.ToString(),
+                Name = name,
+                Description = description
+            };
+        }
+
         public string GameModeId { get { return this.PartitionKey; } }
         public string Created { get { return this.RowKey; } }
         public string Name { get; set; }
