@@ -15,14 +15,14 @@ namespace PingisTests
         [TestCleanup]
         public void Cleanup()
         {
-            Matches matches = new Matches();
+            GameModes gameModes = new GameModes();
             // get all matches, loop through matches and delete...
-            var playedMatches = matches.GetAll();
-            if (playedMatches != null && playedMatches.Count > 0)
+            var availableGameModes = gameModes.GetAll();
+            if (availableGameModes != null && availableGameModes.Count > 0)
             {
-                foreach (var match in playedMatches)
+                foreach (var gameMode in availableGameModes)
                 {
-                    matches.Delete(match);
+                    gameModes.Delete(gameMode);
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace PingisTests
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 
-            CloudTable table = tableClient.GetTableReference("Matches");
+            CloudTable table = tableClient.GetTableReference("GameModes");
             table.CreateIfNotExists();
 
             // insert

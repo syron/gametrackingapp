@@ -17,15 +17,26 @@ namespace Pingis.DAL
             table = tableClient.GetTableReference("GameModes");
             table.CreateIfNotExists();
         }
-
-<<<<<<< HEAD
-=======
-        public void Create()
+        
+        public void Create(GameModeEntity entity)
         {
-            
+            TableOperation insertOperation = TableOperation.Insert(entity);
+            table.Execute(insertOperation);
         }
 
->>>>>>> master
+        public void Delete(GameModeEntity entity)
+        {
+            TableOperation deleteOperation = TableOperation.Delete(user);
+
+            table.Execute(deleteOperation);
+        }
+
+        public void Update(GameModeEntity entity)
+        {
+            TableOperation updateOperation = TableOperation.InsertOrReplace(user);
+            table.Execute(updateOperation);
+        }
+        
         public List<GameModeEntity> GetAll()
         {
             TableQuery<GameModeEntity> query = new TableQuery<GameModeEntity>();
