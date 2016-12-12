@@ -162,7 +162,11 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
                 }
             }
 
-            return Matches.GetMatchById(matchId);
+            var match = Matches.GetMatchById(matchId);
+
+            Notifications.SendNotification(Pingis.Notifications.NotificationType.Challenged, match, Users.GetByUserId(userId), Users.GetByUserId(opponentId));
+
+            return match;
         }
 
         [HttpGet]

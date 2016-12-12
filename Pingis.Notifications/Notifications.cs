@@ -17,18 +17,21 @@ namespace Pingis.Notifications
             this.Client = QueueClient.CreateFromConnectionString(serviceBusConnectionString, queueName);
         }
 
-        public void SendChallengeNotification(NotificationType type, MatchEntity match, UserEntity challenger, UserEntity opponent)
+        public void SendNotification(NotificationType type, MatchEntity match, UserEntity challenger, UserEntity opponent)
         {
             EmailNotification notification = new EmailNotification();
             
             if (type == NotificationType.Challenged)
             {
-                notification.Receiver = opponent.Email;
-                notification.Title = $"PingisApp: {challenger.DisplayName} has challenged you.";
-                notification.Message = $"{challenger.DisplayName} has challenged you!! Please visit https://afpingisapp.azurewebsites.net/pingis to accept or decline the challenge!";
+                if (!string.IsNullOrWhiteSpace(opponent.Email))
+                {
+                    notification.Receiver = opponent.Email;
+                    notification.Title = $"PingisApp: {challenger.DisplayName} has challenged you.";
+                    notification.Message = $"{challenger.DisplayName} has challenged you!! Please visit https://afpingisapp.azurewebsites.net/pingis to accept or decline the challenge!";
 
-                var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
-                this.Client.Send(message);
+                    var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
+                    this.Client.Send(message);
+                }
             }
         }
     }
