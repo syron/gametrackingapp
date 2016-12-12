@@ -27,7 +27,7 @@ namespace Pingis.Notifications
                 {
                     notification.Receiver = opponent.Email;
                     notification.Title = $"PingisApp: {challenger.DisplayName} has challenged you.";
-                    notification.Message = $"{challenger.DisplayName} has challenged you!! Please visit https://afpingisapp.azurewebsites.net/pingis to accept or decline the challenge!";
+                    notification.Message = $"{challenger.DisplayName} has challenged you!! Please visit https://afpingisapp.azurewebsites.net/pingis to accept or decline the challenge! To turn notifications off, please contact Robert Mayer <robert.mayer@afconsult.com>!";
 
                     var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
                     this.Client.Send(message);

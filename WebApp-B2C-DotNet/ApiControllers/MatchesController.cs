@@ -238,10 +238,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             Claim objectId = ClaimsPrincipal.Current.Identities.First().Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier");
             var userId = objectId.Value;
             var match = Matches.GetMatchById(Guid.Parse(matchId));
-
-            // if challengerid is equal to current user id... no accept is allowed.
-            if (match.ChallengerId == userId) return false;
-
+            
             // if match status is not equal to 0, accept is not possible.
             if (match.Status != 0) return false;
             
