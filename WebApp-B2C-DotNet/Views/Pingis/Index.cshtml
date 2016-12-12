@@ -70,7 +70,7 @@
                                 <a class="btn btn-success" ng-click="acceptMatch(match.MatchId)">Accept</a> <a class="btn btn-danger" ng-click="declineMatch(match.MatchId)">Decline</a>
                             </span>
                             <span ng-hide="match.Challenger.UserId != currentUserId">
-                                <a class="btn btn-danger" ng-click="declineMatch(match.MatchId)">Cancel</a>
+                                <a class="btn btn-danger" ng-click="cancelMatch(match.MatchId)">Cancel</a>
                             </span>
                             <br />
                             <span class="small" am-time-ago="match.MatchUpdated"></span>

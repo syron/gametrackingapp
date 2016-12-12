@@ -199,7 +199,7 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
     };
     $scope.cancelMatch = function (matchId) {
         matchService.declineMatch(matchId).then(function (d) {
-            toastr.error("Match has been canceled", "Match status changed");
+            toastr.error("Match has been cancelled", "Match status changed");
             $scope.loadMatches();
         });
     };
