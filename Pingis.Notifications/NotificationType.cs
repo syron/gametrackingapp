@@ -9,6 +9,7 @@ namespace Pingis.Notifications
     public enum NotificationType
     {
         Challenged,
-        ChallengeAccepted
+        ChallengeAccepted,
+        ChallengeDeclined
     }
 }
