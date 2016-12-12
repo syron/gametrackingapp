@@ -158,6 +158,7 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
 
     $scope.challenge = function (userId) {
         matchService.challenge(userId).then(function (d) {
+
             $scope.loadMatches();
         });
     };
@@ -219,19 +220,16 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
     $scope.loadHighScoreMatchCount = function () {
         userService.highscore('matchCount').then(function (d) {
             $scope.highscoreByMatchCount = d.data;
-            setInterval($scope.loadHighScoreMatchCount, 15000);
         });
     };
     $scope.loadHighScoreWinCount = function () {
         userService.highscore('winCount').then(function (d) {
             $scope.highscoreByWinCount = d.data;
-            setInterval($scope.loadHighScoreMatchCount, 15000);
         });
     };
     $scope.loadHighScoreELO = function () {
         userService.highscore('ELO').then(function (d) {
             $scope.highscoreByELO = d.data;
-            setInterval($scope.loadHighScoreMatchCount, 15000);
         });
     };
 
@@ -244,8 +242,6 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
     $scope.loadCurrentUser = function () {
         userService.user($scope.currentUserId).then(function (d) {
             $scope.currentUser = d.data;
-
-            setInterval($scope.loadCurrentUser, 15000);
         });
     };
 
