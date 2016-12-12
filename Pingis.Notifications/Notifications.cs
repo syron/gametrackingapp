@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pingis.Notifications
 {
-    public class Notification
+    public class Notifications
     {
         public static void SendChallengeNotification(NotificationType type, MatchEntity match, UserEntity challenger, UserEntity opponent)
         {
