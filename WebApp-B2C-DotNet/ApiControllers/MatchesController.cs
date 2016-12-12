@@ -186,6 +186,8 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             match.Status = 1;
             Matches.Update(match);
 
+            Notifications.SendNotification(Pingis.Notifications.NotificationType.ChallengeAccepted, match, Users.GetByUserId(match.ChallengerId), Users.GetByUserId(match.OpponentId));
+
             return true;
         }
 

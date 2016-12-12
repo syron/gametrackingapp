@@ -19,19 +19,38 @@ namespace Pingis.Notifications
 
         public void SendNotification(NotificationType type, MatchEntity match, UserEntity challenger, UserEntity opponent)
         {
-            EmailNotification notification = new EmailNotification();
-            
-            if (type == NotificationType.Challenged)
+            try
             {
+                EmailNotification notification = new EmailNotification();
+
                 if (!string.IsNullOrWhiteSpace(opponent.Email))
+                    return;
+
+                if (type == NotificationType.Challenged)
                 {
-                    notification.Receiver = opponent.Email;
+                    // opponent should receive notification 
                     notification.Title = $"PingisApp: {challenger.DisplayName} has challenged you.";
                     notification.Message = $"{challenger.DisplayName} has challenged you!! Please visit https://afpingisapp.azurewebsites.net/pingis to accept or decline the challenge! To turn notifications off, please contact Robert Mayer <robert.mayer@afconsult.com>!";
-
-                    var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
-                    this.Client.Send(message);
+                    
                 }
+                else if (type == NotificationType.ChallengeAccepted)
+                {
+                    // challenger should receive notification
+                }
+                else if (type == NotificationType.ChallengeDeclined)
+                {
+                    // challenger should receive notification
+                }
+
+
+
+                var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
+                this.Client.Send(message);
+
+            }
+            catch (Exception ex)
+            {
+                // do nothing... todo: implement error handling...
             }
         }
     }
