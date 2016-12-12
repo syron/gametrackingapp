@@ -245,6 +245,11 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             if (match.Status != 0) return false;
             
             Matches.Delete(match);
+            
+            if (match.OpponentId != match.ChallengerId)
+            {
+                Notifications.SendNotification(Pingis.Notifications.NotificationType.ChallengeAccepted, match, Users.GetByUserId(match.ChallengerId), Users.GetByUserId(match.OpponentId));
+            }
 
             return true;
         }
