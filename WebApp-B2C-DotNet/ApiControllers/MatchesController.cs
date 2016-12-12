@@ -246,9 +246,9 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
             
             Matches.Delete(match);
             
-            if (match.OpponentId != match.ChallengerId)
+            if (match.ChallengerId != userId)
             {
-                Notifications.SendNotification(Pingis.Notifications.NotificationType.ChallengeAccepted, match, Users.GetByUserId(match.ChallengerId), Users.GetByUserId(match.OpponentId));
+                Notifications.SendNotification(Pingis.Notifications.NotificationType.ChallengeDeclined, match, Users.GetByUserId(match.ChallengerId), Users.GetByUserId(match.OpponentId));
             }
 
             return true;

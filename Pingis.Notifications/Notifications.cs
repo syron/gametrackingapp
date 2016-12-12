@@ -48,7 +48,7 @@ namespace Pingis.Notifications
 
                     // challenger should receive notification
                     notification.Title = $"PingisApp: {opponent.DisplayName} declined your challenge.";
-                    notification.Message = $"{challenger.DisplayName} has declined your challenge! Visit https://afpingisapp.azurewebsites.net/pingis to send a new challenge or to challenge another player! To turn notifications off, please contact Robert Mayer <robert.mayer@afconsult.com>!";
+                    notification.Message = $"{opponent.DisplayName} has declined your challenge! Visit https://afpingisapp.azurewebsites.net/pingis to send a new challenge or to challenge another player! To turn notifications off, please contact Robert Mayer <robert.mayer@afconsult.com>!";
                     notification.Receiver = challenger.Email;
                 }
                 else
