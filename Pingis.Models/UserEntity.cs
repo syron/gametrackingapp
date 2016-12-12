@@ -25,5 +25,6 @@ namespace Pingis.Models
         public string UserId { get { return this.PartitionKey; } }
         public string DisplayName { get; set; }
         public Double EloRating { get; set; }
+        public string Email { get; set; }
     }
 }
