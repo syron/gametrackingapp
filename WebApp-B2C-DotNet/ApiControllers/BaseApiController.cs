@@ -12,11 +12,13 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.ApiControllers
     {
         internal Matches Matches { get; set; }
         internal Users Users { get; set; }
+        internal Notifications Notifications { get; set; }
 
         public BaseApiController() : base()
         {
             Matches = new Matches();
             Users = new Users();
+            Notifications = new Notifications(System.Configuration.ConfigurationManager.AppSettings["AzureServiceBusConnectionString"].ToString(), System.Configuration.ConfigurationManager.AppSettings["AzureServiceBusNotificationsQueueName"].ToString());
         }
     }
 }

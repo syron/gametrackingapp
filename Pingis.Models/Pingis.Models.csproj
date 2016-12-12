@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailNotification.cs" />
     <Compile Include="SeasonEntity.cs" />
     <Compile Include="MatchEntity.cs" />
     <Compile Include="MatchStatus.cs" />

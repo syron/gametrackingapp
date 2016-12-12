@@ -197,6 +197,12 @@ app.controller('PingisCtrl', function (userService, matchService, moment, $scope
             $scope.loadMatches();
         });
     };
+    $scope.cancelMatch = function (matchId) {
+        matchService.declineMatch(matchId).then(function (d) {
+            toastr.error("Match has been canceled", "Match status changed");
+            $scope.loadMatches();
+        });
+    };
 
     $scope.loadUsers = function () {
         userService.users().then(function (d) {
