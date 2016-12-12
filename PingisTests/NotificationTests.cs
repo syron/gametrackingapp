@@ -2,6 +2,9 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.ServiceBus.Messaging;
+using Pingis.Models;
+using Newtonsoft.Json;
 
 namespace PingisTests
 {
@@ -64,6 +67,19 @@ namespace PingisTests
             //
             // TODO: Add test logic here
             //
+
+            var connectionString = "";
+            var queueName = "notifications";
+
+            EmailNotification notification = new EmailNotification();
+            notification.Receiver = "rwlmayer@gmail.com";
+            notification.Title = "Test";
+            notification.Message = "Hello World";
+
+            var client = QueueClient.CreateFromConnectionString(connectionString, queueName);
+            
+            var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
+            client.Send(message);
         }
     }
 }

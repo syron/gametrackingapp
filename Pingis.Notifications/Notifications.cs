@@ -1,4 +1,6 @@
-﻿using Pingis.Models;
+﻿using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
+using Pingis.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,25 @@ namespace Pingis.Notifications
 {
     public class Notifications
     {
-        public static void SendChallengeNotification(NotificationType type, MatchEntity match, UserEntity challenger, UserEntity opponent)
+        QueueClient Client = null;
+        public Notifications(string serviceBusConnectionString, string queueName)
         {
+            this.Client = QueueClient.CreateFromConnectionString(serviceBusConnectionString, queueName);
+        }
 
+        public void SendChallengeNotification(NotificationType type, MatchEntity match, UserEntity challenger, UserEntity opponent)
+        {
+            EmailNotification notification = new EmailNotification();
+            
+            if (type == NotificationType.Challenged)
+            {
+                notification.Receiver = opponent.Email;
+                notification.Title = $"PingisApp: {challenger.DisplayName} has challenged you.";
+                notification.Message = $"{challenger.DisplayName} has challenged you!! Please visit https://afpingisapp.azurewebsites.net/pingis to accept or decline the challenge!";
+
+                var message = new BrokeredMessage(JsonConvert.SerializeObject(notification));
+                this.Client.Send(message);
+            }
         }
     }
 }
